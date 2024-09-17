@@ -1,15 +1,16 @@
-import { View, Text, TouchableOpacity, ImageBackground } from 'react-native'
-import React, { useState, useReducer, useEffect, useCallback } from 'react'
-import { COLORS, images } from '../constants'
+import { MaterialIcons } from '@expo/vector-icons'
+import { GoogleSigninButton } from '@react-native-google-signin/google-signin'
+import { StatusBar } from 'expo-status-bar'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 import * as Animatable from 'react-native-animatable'
-import Input from '../components/Input'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Button from '../components/Button'
+import Input from '../components/Input'
+import { COLORS, images } from '../constants'
+import { commonStyles } from '../styles/CommonStyles'
 import { validateInput } from '../utils/actions/formActions'
 import { reducer } from '../utils/reducers/formReducers'
-import { commonStyles } from '../styles/CommonStyles'
-import { StatusBar } from 'expo-status-bar'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { MaterialIcons } from '@expo/vector-icons'
 
 const isTestMode = true
 
@@ -54,6 +55,14 @@ const Signup = ({ navigation }) => {
             style={{ flex: 1, backgroundColor: COLORS.blue }}
         >
             <StatusBar hidden={true} />
+            <GoogleSigninButton
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark}
+                onPress={() => {
+                    // initiate sign in
+                }}
+                disabled={isInProgress}
+            />
             <View style={commonStyles.header}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}

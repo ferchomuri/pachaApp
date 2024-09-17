@@ -10,10 +10,12 @@
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint:check": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-google-signin/google-signin": "^13.0.1",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
@@ -44,8 +46,9 @@
   "devDependencies": {
     "@babel/core": "^7.24.0",
     "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
-    "prettier": "^3.0.3"
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3"
   },
   "private": true
 }

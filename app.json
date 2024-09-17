@@ -27,13 +27,15 @@
           "apiKey": "AIzaSyD9dz07KGRRgDjIyuWlNjjegX1SugkniZ4"
         }
       },
-      "package": "com.bluelover19.AutoMarket"
+      "package": "com.bluelover19.AutoMarket",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "@react-native-google-signin/google-signin"
     ]
   }
 }
