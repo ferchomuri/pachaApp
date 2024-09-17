@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "AutoMarket",
+    "slug": "AutoMarket",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1b6708"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#1b6708"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyD9dz07KGRRgDjIyuWlNjjegX1SugkniZ4"
+        }
+      },
+      "package": "com.bluelover19.AutoMarket"
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}
