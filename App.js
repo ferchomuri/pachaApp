@@ -1,4 +1,3 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
 import { useCallback } from 'react'
@@ -11,13 +10,6 @@ import AppNavigation from './navigations/AppNavigation'
 LogBox.ignoreAllLogs()
 
 SplashScreen.preventAutoHideAsync()
-
-GoogleSignin.configure({
-    webClientId: GOOGLE_WEB_CLIENT_ID,
-    androidClientId: GOOGLE_ANDROID_CLIENT_ID,
-    iosClientId: GOOGLE_IOS_CLIENT_ID,
-    scopes: ['profile', 'email'],
-})
 
 export default function App() {
     const [fontsLoaded] = useFonts(FONTS)
