@@ -3,7 +3,6 @@ import React from 'react';
 import { COLORS, SIZES } from '../constants';
 
 const Input = (props) => {
-  console.log(props?.errorText);
   const onChangeText = (text) => {
     props.onInputChanged(props.id, text);
   };
