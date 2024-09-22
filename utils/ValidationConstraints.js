@@ -1,9 +1,16 @@
 import { validate } from 'validate.js';
 
+const extractErrorMessage = (validationResult, id) => {
+  return validationResult && validationResult[id]
+    ? validationResult[id].map((error) => error.split(' ').slice(1).join(' '))
+    : null;
+};
+
 export const validateString = (id, value) => {
   const constraints = {
     presence: {
       allowEmpty: false,
+      message: 'No puede estar vacío',
     },
   };
 
@@ -11,88 +18,89 @@ export const validateString = (id, value) => {
     constraints.format = {
       pattern: '.+',
       flags: 'i',
-      message: "Value can't be blank.",
+      message: 'Valor no puede ser vacío',
     };
   }
 
   const validationResult = validate({ [id]: value }, { [id]: constraints });
-  return validationResult && validationResult[id];
+  return extractErrorMessage(validationResult, id);
 };
 
 export const validateEmail = (id, value) => {
   const constraints = {
     presence: {
       allowEmpty: false,
+      message: 'No puede estar vacío',
     },
   };
 
   if (value !== '') {
-    constraints.email = true;
+    constraints.email = {
+      message: 'Correo electrónico no válido',
+    };
   }
 
   const validationResult = validate({ [id]: value }, { [id]: constraints });
-  return validationResult && validationResult[id];
+  return extractErrorMessage(validationResult, id);
 };
 
 export const validatePassword = (id, value) => {
   const constraints = {
     presence: {
       allowEmpty: false,
+      message: 'No puede estar vacío',
     },
   };
 
   if (value !== '') {
     constraints.length = {
       minimum: 6,
-      message: 'must be at least 6 characters',
+      message: 'Debe tener al menos 6 caracteres',
     };
   }
 
   const validationResult = validate({ [id]: value }, { [id]: constraints });
-  return validationResult && validationResult[id];
+  return extractErrorMessage(validationResult, id);
 };
 
 export const validateCreditCardNumber = (id, value) => {
   const constraints = {
-    presence: {
-      allowEmpty: false,
-    },
-    format: {
-      pattern: /^(?:\d{4}-){3}\d{4}$|^\d{16}$/,
-      message: 'Invalid credit card number.',
-    },
+    presence: { allowEmpty: false, message: 'No puede estar vacío' },
+    format: { pattern: /^(?:\d{4}-){3}\d{4}$|^\d{16}$/, message: 'Número de tarjeta inválido.' },
   };
 
   const validationResult = validate({ [id]: value }, { [id]: constraints });
-  return validationResult && validationResult[id];
+  return extractErrorMessage(validationResult, id);
 };
 
 export const validateCVV = (id, value) => {
   const constraints = {
     presence: {
       allowEmpty: false,
+      message: 'No puede estar vacío',
     },
     format: {
       pattern: /^[0-9]{3,4}$/,
-      message: 'Invalid CVV.',
+      message: 'CVV inválido.',
     },
   };
 
   const validationResult = validate({ [id]: value }, { [id]: constraints });
-  return validationResult && validationResult[id];
+  return extractErrorMessage(validationResult, id);
 };
 
 export const validateExpiryDate = (id, value) => {
   const constraints = {
     presence: {
       allowEmpty: false,
+      message: 'No puede estar vacío',
     },
     format: {
       pattern: /^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
-      message: 'Invalid expiry date. Please use MM/YY format.',
+      message: 'Fecha de expiración inválida. Formato: MM/YY',
     },
   };
 
   const validationResult = validate({ [id]: value }, { [id]: constraints });
-  return validationResult && validationResult[id];
+  return extractErrorMessage(validationResult, id);
 };
