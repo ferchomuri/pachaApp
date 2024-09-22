@@ -5,24 +5,24 @@ import { COLORS, images } from '../constants';
 const { width } = Dimensions.get('window');
 
 const sliderImages = [
- images.shop1,
+  images.shop1,
   images.shop2,
   images.shop3,
   images.shop4,
   images.shop5,
-  images.shop6
+  images.shop6,
 ];
 
 const ImageSlider = () => {
   const scrollViewRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handleScroll = event => {
+  const handleScroll = (event) => {
     const page = Math.round(event.nativeEvent.contentOffset.x / width);
     setCurrentPage(page);
   };
 
-  const scrollToPage = page => {
+  const scrollToPage = (page) => {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({ x: page * width, animated: true });
       setCurrentPage(page);
@@ -61,8 +61,8 @@ const ImageSlider = () => {
 
 const styles = StyleSheet.create({
   container: {
-   height: 321,
-   width: width
+    height: 321,
+    width: width,
   },
   slide: {
     width,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     height: 321,
     width: width,
     borderBottomLeftRadius: 32,
-    borderBottomRightRadius: 32
+    borderBottomRightRadius: 32,
   },
   pagination: {
     position: 'absolute',

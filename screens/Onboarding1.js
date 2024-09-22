@@ -6,7 +6,7 @@ import { illustrations } from '../constants';
 import PageContainer from '../components/PageContainer';
 import DotsView from '../components/DotsView';
 import Button from '../components/Button';
-import Onboarding1Styles from '../styles/OnboardingStyles'; 
+import Onboarding1Styles from '../styles/OnboardingStyles';
 import { COLORS } from '../constants';
 
 const Onboarding1 = ({ navigation }) => {
@@ -50,7 +50,7 @@ const Onboarding1 = ({ navigation }) => {
           </View>
 
           <Text style={Onboarding1Styles.description}>
-          Explore a diverse range of vehicles and find your ideal automotive match
+            Explore a diverse range of vehicles and find your ideal automotive match
           </Text>
 
           <View style={Onboarding1Styles.dotsContainer}>

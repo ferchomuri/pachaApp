@@ -6,7 +6,7 @@ import { illustrations } from '../constants';
 import PageContainer from '../components/PageContainer';
 import DotsView from '../components/DotsView';
 import Button from '../components/Button';
-import Onboarding3Styles from '../styles/OnboardingStyles'; 
+import Onboarding3Styles from '../styles/OnboardingStyles';
 import { COLORS } from '../constants';
 
 const Onboarding3 = ({ navigation }) => {
@@ -50,7 +50,8 @@ const Onboarding3 = ({ navigation }) => {
           </View>
 
           <Text style={Onboarding3Styles.description}>
-          We simplify the process of finding the ideal driving experience or investment opportunity in the automotive market.
+            We simplify the process of finding the ideal driving experience or investment
+            opportunity in the automotive market.
           </Text>
 
           <View style={Onboarding3Styles.dotsContainer}>

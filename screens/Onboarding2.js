@@ -6,7 +6,7 @@ import { illustrations } from '../constants';
 import PageContainer from '../components/PageContainer';
 import DotsView from '../components/DotsView';
 import Button from '../components/Button';
-import Onboarding2Styles from '../styles/OnboardingStyles'; 
+import Onboarding2Styles from '../styles/OnboardingStyles';
 import { COLORS } from '../constants';
 
 const Onboarding2 = ({ navigation }) => {
@@ -50,7 +50,8 @@ const Onboarding2 = ({ navigation }) => {
           </View>
 
           <Text style={Onboarding2Styles.description}>
-          Embark on an adventure with limitless options to find the perfect ride that suits your style and needs.
+            Embark on an adventure with limitless options to find the perfect ride that suits your
+            style and needs.
           </Text>
 
           <View style={Onboarding2Styles.dotsContainer}>

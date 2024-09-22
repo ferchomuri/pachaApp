@@ -1,19 +1,17 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { ScrollView } from 'react-native-virtualized-view'
-import { COLORS, SIZES, icons, images } from '../constants'
-import PaymentMethodItem from '../components/PaymentMethodItem'
-import Header from '../components/Header'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-virtualized-view';
+import { COLORS, SIZES, icons, images } from '../constants';
+import PaymentMethodItem from '../components/PaymentMethodItem';
+import Header from '../components/Header';
 
 const SelectPaymentMethods = ({ navigation }) => {
-  
+  /**
+   * Render content
+   */
 
-/**
- * Render content
- */
-
-  const renderContent = ()=>{
+  const renderContent = () => {
     const [selectedItem, setSelectedItem] = useState(null);
 
     const handleCheckboxPress = (itemTitle) => {
@@ -28,7 +26,7 @@ const SelectPaymentMethods = ({ navigation }) => {
 
     return (
       <View>
-           <PaymentMethodItem
+        <PaymentMethodItem
           checked={selectedItem === 'Add a New Card'} // Check if it's the selected item
           onPress={() => handleCheckboxPress('Add a New Card')} // Pass the item title
           title="Add a New Card"
@@ -47,61 +45,61 @@ const SelectPaymentMethods = ({ navigation }) => {
           icon={icons.apple}
         />
       </View>
-    )
-  }
+    );
+  };
   return (
     <SafeAreaView style={styles.area}>
-    <View style={styles.container}>
-      <Header title="Payment Methods"/>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
-      {renderContent()}
-      </ScrollView>
-      <TouchableOpacity
-          onPress={() => navigation.navigate("ReviewSummary")}
-          style={[styles.offerBtn, {
-            position: "absolute",
-            bottom: 0,
-            right: 16,
-            left: 16
-          }]}>
+      <View style={styles.container}>
+        <Header title="Payment Methods" />
+        <ScrollView showsVerticalScrollIndicator={false}>{renderContent()}</ScrollView>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ReviewSummary')}
+          style={[
+            styles.offerBtn,
+            {
+              position: 'absolute',
+              bottom: 0,
+              right: 16,
+              left: 16,
+            },
+          ]}
+        >
           <Text style={styles.offerBtnText}>Continue</Text>
         </TouchableOpacity>
-    </View>
-  </SafeAreaView>
-  )
-}
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   area: {
     flex: 1,
-    backgroundColor: COLORS.white
-},
-container: {
+    backgroundColor: COLORS.white,
+  },
+  container: {
     flex: 1,
     backgroundColor: COLORS.white,
-    padding: 12
-},
-subtitle: {
+    padding: 12,
+  },
+  subtitle: {
     fontSize: 18,
-    fontFamily: "bold",
-    color: COLORS.black
-},
-offerBtn: {
+    fontFamily: 'bold',
+    color: COLORS.black,
+  },
+  offerBtn: {
     width: SIZES.width - 32,
     height: 48,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: COLORS.primary,
     borderRadius: 12,
-    marginVertical: 16
-},
-offerBtnText: {
+    marginVertical: 16,
+  },
+  offerBtnText: {
     fontSize: 12,
-    fontFamily: "regular",
-    color: COLORS.white
-},
-})
+    fontFamily: 'regular',
+    color: COLORS.white,
+  },
+});
 
-export default SelectPaymentMethods
+export default SelectPaymentMethods;

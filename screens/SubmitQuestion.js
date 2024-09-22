@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet, Alert } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from "react-native-safe-area-context"
-import { COLORS, SIZES, icons, illustrations } from "../constants"
-import { commonStyles } from '../styles/CommonStyles'
+import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, SIZES, icons, illustrations } from '../constants';
+import { commonStyles } from '../styles/CommonStyles';
 
 const SubmitQuestion = ({ navigation }) => {
   /***
@@ -10,24 +10,23 @@ const SubmitQuestion = ({ navigation }) => {
    */
   function renderHeader() {
     return (
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 20,
-      }}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={commonStyles.header1Icon}
-        >
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: 20,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.goBack()} style={commonStyles.header1Icon}>
           <Image
-            resizeMode='contain'
+            resizeMode="contain"
             source={icons.arrowLeft}
             style={{ height: 24, width: 24, tintColor: COLORS.black }}
           />
         </TouchableOpacity>
         <Text style={{ marginLeft: 12, fontSize: 17, fontFamily: 'regular' }}>Ask Questions</Text>
       </View>
-    )
+    );
   }
 
   /***
@@ -52,10 +51,10 @@ const SubmitQuestion = ({ navigation }) => {
       <View style={styles.container}>
         <Image
           source={illustrations.question}
-          resizeMode='contain'
+          resizeMode="contain"
           style={{
             width: SIZES.width * 0.8,
-            height: SIZES.width * 0.8
+            height: SIZES.width * 0.8,
           }}
         />
         <Text style={styles.title}>Submit your questions</Text>
@@ -70,25 +69,27 @@ const SubmitQuestion = ({ navigation }) => {
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
       }}
     >
-      <View style={{
-        flex: 1,
-        marginHorizontal: 12
-      }}>
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: 12,
+        }}
+      >
         {renderHeader()}
         {renderSubmitQuestionForm()}
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -123,5 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export default SubmitQuestion
+export default SubmitQuestion;

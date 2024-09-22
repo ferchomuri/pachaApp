@@ -6,22 +6,22 @@ export default function VerticalStepper() {
   return (
     <View style={styles.container}>
       <View style={styles.stepContainer}>
-        <View style={[styles.stepIndicator, {  backgroundColor: COLORS.primary }]} />
+        <View style={[styles.stepIndicator, { backgroundColor: COLORS.primary }]} />
         <Text style={styles.stepText}>Your order has been received</Text>
       </View>
 
       <View style={styles.stepContainer}>
-        <View style={[styles.stepIndicator, {  backgroundColor: COLORS.primary }]} />
+        <View style={[styles.stepIndicator, { backgroundColor: COLORS.primary }]} />
         <Text style={styles.stepText}>The Shop is taking your car</Text>
       </View>
 
       <View style={styles.stepContainer}>
-        <View style={[styles.stepIndicator, {  backgroundColor: COLORS.primary }]}/>
+        <View style={[styles.stepIndicator, { backgroundColor: COLORS.primary }]} />
         <Text style={styles.stepText}>Your order has been picked up for delivery</Text>
       </View>
 
       <View style={styles.stepContainer}>
-        <View style={[styles.stepIndicator, {  backgroundColor: COLORS.gray4}]} />
+        <View style={[styles.stepIndicator, { backgroundColor: COLORS.gray4 }]} />
         <Text style={styles.stepText}>Order arriving soon!</Text>
       </View>
     </View>
@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
   stepText: {
     fontSize: 13,
     color: COLORS.black,
-    fontFamily: 'regular'
+    fontFamily: 'regular',
   },
 });

@@ -18,11 +18,7 @@ const Rating = () => {
       const iconName = i <= rating ? 'star' : 'star-outline';
 
       ratingIcons.push(
-        <TouchableOpacity
-          key={i}
-          onPress={() => handleRating(i)}
-          style={styles.iconContainer}
-        >
+        <TouchableOpacity key={i} onPress={() => handleRating(i)} style={styles.iconContainer}>
           <Ionicons name={iconName} size={30} color="orange" />
         </TouchableOpacity>
       );
@@ -43,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 16
+    marginVertical: 16,
   },
   ratingIcons: {
     flexDirection: 'row',
@@ -52,10 +48,10 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   ratingText: {
-    fontFamily: "bold",
+    fontFamily: 'bold',
     fontSize: 20,
     marginLeft: 10,
-    color: COLORS.primary
+    color: COLORS.primary,
   },
 });
 

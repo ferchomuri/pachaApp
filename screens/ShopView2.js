@@ -1,5 +1,13 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, SafeAreaView, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-virtualized-view';
 import { MaterialCommunityIcons, Octicons, Fontisto, AntDesign } from '@expo/vector-icons';
@@ -15,10 +23,13 @@ const ShopView2 = () => {
     return (
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={commonStyles.header3Icon}>
-          <Image resizeMode='contain' source={icons.arrowLeft} style={styles.arrowLeftIcon} />
+          <Image resizeMode="contain" source={icons.arrowLeft} style={styles.arrowLeftIcon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log('Move to another screen')} style={commonStyles.header3Icon}>
-          <Image resizeMode='contain' source={icons.more} style={styles.moreIcon} />
+        <TouchableOpacity
+          onPress={() => console.log('Move to another screen')}
+          style={commonStyles.header3Icon}
+        >
+          <Image resizeMode="contain" source={icons.more} style={styles.moreIcon} />
         </TouchableOpacity>
       </View>
     );
@@ -36,7 +47,11 @@ const ShopView2 = () => {
               <Text style={styles.ratingText}>4.7</Text>
             </View>
             <View style={styles.deliveryContainer}>
-              <MaterialCommunityIcons name="truck-delivery-outline" size={24} color={COLORS.primary} />
+              <MaterialCommunityIcons
+                name="truck-delivery-outline"
+                size={24}
+                color={COLORS.primary}
+              />
               <Text style={styles.deliveryText}>Free</Text>
             </View>
             <View style={styles.timeContainer}>
@@ -46,8 +61,8 @@ const ShopView2 = () => {
           </View>
           <Text style={styles.shopName}>Ferari House Shop</Text>
           <Text style={styles.shopDescription}>
-            Feraria sed diam eget risus varius blandit sit amet non magna. Integer posuere erat a ante venenatis
-            dapibus posuere velit aliquet.
+            Feraria sed diam eget risus varius blandit sit amet non magna. Integer posuere erat a
+            ante venenatis dapibus posuere velit aliquet.
           </Text>
 
           {/* Render Keyword related to shops */}
@@ -81,13 +96,17 @@ const ShopView2 = () => {
             <TouchableOpacity
               onPress={() => navigation.navigate('Detail')}
               key={index}
-              style={styles.productItem}>
+              style={styles.productItem}
+            >
               <Image source={item.image} style={styles.productImage} />
               <Text style={styles.productName}>{item.name}</Text>
               <Text style={styles.shopName}>{item.shopName}</Text>
               <View style={styles.priceContainer}>
                 <Text style={styles.priceText}>${item.price}</Text>
-                <TouchableOpacity onPress={() => console.log('Add to favourite')} style={styles.addToFavouriteButton}>
+                <TouchableOpacity
+                  onPress={() => console.log('Add to favourite')}
+                  style={styles.addToFavouriteButton}
+                >
                   <AntDesign name="plus" size={12} color={COLORS.white} />
                 </TouchableOpacity>
               </View>

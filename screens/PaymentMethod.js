@@ -1,12 +1,12 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet, FlatList } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, SIZES, FONTS, icons, images } from '../constants'
-import { useNavigation } from '@react-navigation/native'
-import { commonStyles } from '../styles/CommonStyles'
+import { View, Text, TouchableOpacity, Image, StyleSheet, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, SIZES, FONTS, icons, images } from '../constants';
+import { useNavigation } from '@react-navigation/native';
+import { commonStyles } from '../styles/CommonStyles';
 import { Feather } from '@expo/vector-icons';
-import Button from '../components/Button'
-import { StatusBar } from 'expo-status-bar'
+import Button from '../components/Button';
+import { StatusBar } from 'expo-status-bar';
 
 const PaymentCard = ({ cardImage, isSelected, onSelect, cardName }) => {
   const cardStyle = isSelected ? styles.selectedCard : styles.card;
@@ -15,48 +15,44 @@ const PaymentCard = ({ cardImage, isSelected, onSelect, cardName }) => {
     <View style={styles.cardContainer}>
       <TouchableOpacity onPress={onSelect} style={cardStyle}>
         <Image source={cardImage} style={styles.cardImage} />
-
       </TouchableOpacity>
       <Text style={styles.cardText}>{cardName}</Text>
     </View>
-
   );
 };
 
-
 const PaymentMethod = ({ navigation }) => {
   const renderHeader = () => {
-    const navigation = useNavigation()
+    const navigation = useNavigation();
     return (
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 20,
-      }}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={commonStyles.header1Icon}
-        >
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: 20,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.goBack()} style={commonStyles.header1Icon}>
           <Image
-            resizeMode='contain'
+            resizeMode="contain"
             source={icons.arrowLeft}
             style={{ height: 24, width: 24, tintColor: COLORS.black }}
           />
         </TouchableOpacity>
         <Text style={{ marginLeft: 12, fontSize: 17, fontFamily: 'regular' }}>Payment Method</Text>
       </View>
-    )
-  }
+    );
+  };
 
   const renderAvailablePayments = () => {
     const [selectedCard, setSelectedCard] = useState('');
     const navigation = useNavigation();
 
     const data = [
-      { id: '1', cardImage: images.cash, cardName: "Cash" },
-      { id: '2', cardImage: images.visa, cardName: "Visa" },
-      { id: '3', cardImage: images.mastercard, cardName: "MasterCard" },
-      { id: '4', cardImage: images.paypal, cardName: "PayPal" }
+      { id: '1', cardImage: images.cash, cardName: 'Cash' },
+      { id: '2', cardImage: images.visa, cardName: 'Visa' },
+      { id: '3', cardImage: images.mastercard, cardName: 'MasterCard' },
+      { id: '4', cardImage: images.paypal, cardName: 'PayPal' },
     ];
 
     const renderItem = ({ item }) => (
@@ -70,14 +66,9 @@ const PaymentMethod = ({ navigation }) => {
 
     return (
       <View style={{ marginVertical: 22 }}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          horizontal
-        />
+        <FlatList data={data} renderItem={renderItem} keyExtractor={(item) => item.id} horizontal />
         <TouchableOpacity
-          onPress={() => console.log("Pressed")}
+          onPress={() => console.log('Pressed')}
           style={{
             width: SIZES.width - 32,
             borderRadius: 10,
@@ -87,8 +78,9 @@ const PaymentMethod = ({ navigation }) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            paddingHorizontal: 10
-          }}>
+            paddingHorizontal: 10,
+          }}
+        >
           <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
             <Text style={{ ...FONTS.h4, marginBottom: 10 }}>Mastercard</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -96,7 +88,7 @@ const PaymentMethod = ({ navigation }) => {
                 source={images.mastercard}
                 style={{
                   width: 28,
-                  height: 16
+                  height: 16,
                 }}
               />
               <Text style={{ fontSize: 12, fontFamily: 'regular' }}>*****************436</Text>
@@ -108,13 +100,13 @@ const PaymentMethod = ({ navigation }) => {
               style={{
                 height: 12,
                 width: 12,
-                tintColor: COLORS.black
+                tintColor: COLORS.black,
               }}
             />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("AddNewPaymentMethod")}
+          onPress={() => navigation.navigate('AddNewPaymentMethod')}
           style={{
             height: 62,
             width: SIZES.width - 32,
@@ -123,37 +115,38 @@ const PaymentMethod = ({ navigation }) => {
             alignItems: 'center',
             justifyContent: 'center',
             borderColor: COLORS.primary,
-            borderWidth: .5,
+            borderWidth: 0.5,
           }}
         >
           <Feather name="plus" size={24} color={COLORS.primary} />
-          <Text style={{
-            fontSize: 16,
-            textTransform: "uppercase",
-            color: COLORS.primary,
-            marginLeft: 12
-          }}>ADD NEW</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              textTransform: 'uppercase',
+              color: COLORS.primary,
+              marginLeft: 12,
+            }}
+          >
+            ADD NEW
+          </Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   const renderPaymentBtn = () => {
     return (
-      <View style={{
-        position: 'absolute',
-        bottom: 30,
-        width: SIZES.width - 32
-      }}>
-        
-        <Button
-          filled
-          title="CONFIRM"
-          onPress={() => navigation.navigate("PaymentSuccess")}
-        />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 30,
+          width: SIZES.width - 32,
+        }}
+      >
+        <Button filled title="CONFIRM" onPress={() => navigation.navigate('PaymentSuccess')} />
       </View>
-    )
-  }
+    );
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <StatusBar hidden={true} />
@@ -163,8 +156,8 @@ const PaymentMethod = ({ navigation }) => {
         {renderPaymentBtn()}
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
@@ -173,7 +166,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginRight: 10,
-    backgroundColor: COLORS.gray6
+    backgroundColor: COLORS.gray6,
   },
   selectedCard: {
     borderWidth: 2,
@@ -194,8 +187,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.black,
     fontFamily: 'regular',
-    marginVertical: 4
-  }
+    marginVertical: 4,
+  },
 });
 
-export default PaymentMethod
+export default PaymentMethod;

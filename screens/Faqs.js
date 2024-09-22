@@ -1,11 +1,11 @@
-import { View, Text, TouchableOpacity, Image, LayoutAnimation, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, SIZES, icons } from '../constants'
-import { commonStyles } from '../styles/CommonStyles'
-import { ScrollView } from 'react-native-virtualized-view'
-import Button from '../components/Button'
-import { faqs } from '../data/faqs'
+import { View, Text, TouchableOpacity, Image, LayoutAnimation, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, SIZES, icons } from '../constants';
+import { commonStyles } from '../styles/CommonStyles';
+import { ScrollView } from 'react-native-virtualized-view';
+import Button from '../components/Button';
+import { faqs } from '../data/faqs';
 
 const Faqs = ({ navigation }) => {
   /**
@@ -13,24 +13,23 @@ const Faqs = ({ navigation }) => {
    */
   function renderHeader() {
     return (
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 20,
-      }}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={commonStyles.header1Icon}
-        >
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: 20,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.goBack()} style={commonStyles.header1Icon}>
           <Image
-            resizeMode='contain'
+            resizeMode="contain"
             source={icons.arrowLeft}
             style={{ height: 24, width: 24, tintColor: COLORS.black }}
           />
         </TouchableOpacity>
         <Text style={{ marginLeft: 12, fontSize: 17, fontFamily: 'regular' }}>FAQS</Text>
       </View>
-    )
+    );
   }
 
   /***
@@ -39,9 +38,6 @@ const Faqs = ({ navigation }) => {
 
   function renderFAQS() {
     const [expanded, setExpanded] = useState(-1);
-   
-
-
 
     const toggleExpand = (index) => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -51,7 +47,6 @@ const Faqs = ({ navigation }) => {
         setExpanded(index);
       }
     };
-
 
     return (
       <View style={styles.container}>
@@ -67,7 +62,7 @@ const Faqs = ({ navigation }) => {
           </View>
         ))}
       </View>
-    )
+    );
   }
 
   /**Render Button to ask question */
@@ -76,35 +71,37 @@ const Faqs = ({ navigation }) => {
     return (
       <Button
         title="ASK QUESTION"
-        onPress={() => navigation.navigate("SubmitQuestion")}
+        onPress={() => navigation.navigate('SubmitQuestion')}
         filled
         style={{
           width: SIZES.width - 32,
-          marginVertical: 12
+          marginVertical: 12,
         }}
       />
-    )
+    );
   }
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: COLORS.white
-    }}>
-      <View style={{
+    <SafeAreaView
+      style={{
         flex: 1,
-        marginHorizontal: 16
-      }}>
+        backgroundColor: COLORS.white,
+      }}
+    >
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: 16,
+        }}
+      >
         {renderHeader()}
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView showsVerticalScrollIndicator={false}>
           {renderFAQS()}
           {renderActionButtons()}
         </ScrollView>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -150,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Faqs
+export default Faqs;

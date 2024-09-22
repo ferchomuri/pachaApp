@@ -22,13 +22,13 @@ const styles = StyleSheet.create({
   title: {
     ...FONTS.h3,
     color: COLORS.black,
-    textAlign: "center"
+    textAlign: 'center',
   },
   subTitle: {
     ...FONTS.h3,
     color: COLORS.secondary,
-    textAlign: "center",
-    marginTop: 8
+    textAlign: 'center',
+    marginTop: 8,
   },
   description: {
     ...FONTS.body3,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     width: SIZES.width - 44,
     marginBottom: SIZES.padding,
     backgroundColor: 'transparent',
-    borderColor: COLORS.primary
+    borderColor: COLORS.primary,
   },
 });
 

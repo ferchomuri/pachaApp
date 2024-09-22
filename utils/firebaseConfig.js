@@ -20,7 +20,11 @@ export default {
         .collection('logs')
         .add({
           level: 'ERROR',
-          message: `Error creating document: ${error}`,
+          message:
+            `Error creating document: ${error}` +
+            JSON.stringify(data) +
+            ' in collection:' +
+            collectionName,
           timestamp: firestore.FieldValue.serverTimestamp(),
         });
       throw error;
@@ -36,7 +40,12 @@ export default {
         .collection('logs')
         .add({
           level: 'ERROR',
-          message: `Error updateDocument: ${error}`,
+          message:
+            `Error updateDocument: ${error}` +
+            JSON.stringify(data) +
+            docId +
+            ' in collection:' +
+            collectionName,
           timestamp: firestore.FieldValue.serverTimestamp(),
         });
       throw error;
@@ -50,7 +59,13 @@ export default {
       if (doc.exists) {
         return doc.data();
       } else {
-        console.error('No such document!');
+        firestore()
+          .collection('logs')
+          .add({
+            level: 'INFO',
+            message: `No such document: ${docId} in collection: ${collectionName}`,
+            timestamp: firestore.FieldValue.serverTimestamp(),
+          });
         return null;
       }
     } catch (error) {
@@ -74,7 +89,7 @@ export default {
         .collection('logs')
         .add({
           level: 'ERROR',
-          message: `Error deleteDocument: ${error}`,
+          message: `Error deleteDocument: ${error}` + docId + ' in collection: ' + collectionName,
           timestamp: firestore.FieldValue.serverTimestamp(),
         });
       throw error;
@@ -91,7 +106,7 @@ export default {
         .collection('logs')
         .add({
           level: 'ERROR',
-          message: `Error getAllDocuments: ${error}`,
+          message: `Error getAllDocuments: ${error}` + ' in collection: ' + collectionName,
           timestamp: firestore.FieldValue.serverTimestamp(),
         });
       throw error;

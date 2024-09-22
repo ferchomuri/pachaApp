@@ -1,16 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons';
 
 const ReviewStars = ({ review }) => {
   const renderStars = () => {
     const stars = [];
     for (let i = 0; i < review; i++) {
       stars.push(
-        <View
-          style={{ marginRight: 4 }}
-          key={i}
-        >
+        <View style={{ marginRight: 4 }} key={i}>
           <FontAwesome key={i} name="star" size={14} color="orange" />
         </View>
       );
@@ -18,11 +15,7 @@ const ReviewStars = ({ review }) => {
     return stars;
   };
 
-  return (
-    <View style={{ flexDirection: 'row' }}>
-      {renderStars()}
-    </View>
-  );
+  return <View style={{ flexDirection: 'row' }}>{renderStars()}</View>;
 };
 
 export default ReviewStars;

@@ -1,10 +1,18 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet, Switch, Modal, FlatList } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, icons } from '../constants'
-import { commonStyles } from '../styles/CommonStyles'
-import { StatusBar } from 'expo-status-bar'
-
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Switch,
+  Modal,
+  FlatList,
+} from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, icons } from '../constants';
+import { commonStyles } from '../styles/CommonStyles';
+import { StatusBar } from 'expo-status-bar';
 
 const Settings = ({ navigation }) => {
   /**
@@ -12,24 +20,23 @@ const Settings = ({ navigation }) => {
    */
   function renderHeader() {
     return (
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 20,
-      }}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={commonStyles.header1Icon}
-        >
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: 20,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.goBack()} style={commonStyles.header1Icon}>
           <Image
-            resizeMode='contain'
+            resizeMode="contain"
             source={icons.arrowLeft}
             style={{ height: 24, width: 24, tintColor: COLORS.black }}
           />
         </TouchableOpacity>
         <Text style={{ marginLeft: 12, fontSize: 17, fontFamily: 'regular' }}>Settings</Text>
       </View>
-    )
+    );
   }
 
   /***
@@ -86,7 +93,9 @@ const Settings = ({ navigation }) => {
         style={[styles.optionButton, currency === item.id && styles.optionButtonSelected]}
         onPress={() => handleCurrencyChange(item.id)}
       >
-        <Text style={[styles.optionText, currency === item.id && styles.optionTextSelected]}>{item.name}</Text>
+        <Text style={[styles.optionText, currency === item.id && styles.optionTextSelected]}>
+          {item.name}
+        </Text>
       </TouchableOpacity>
     );
 
@@ -95,7 +104,9 @@ const Settings = ({ navigation }) => {
         style={[styles.optionButton, language === item.id && styles.optionButtonSelected]}
         onPress={() => handleLanguageChange(item.id)}
       >
-        <Text style={[styles.optionText, language === item.id && styles.optionTextSelected]}>{item.name}</Text>
+        <Text style={[styles.optionText, language === item.id && styles.optionTextSelected]}>
+          {item.name}
+        </Text>
       </TouchableOpacity>
     );
 
@@ -192,33 +203,36 @@ const Settings = ({ navigation }) => {
             </View>
           </Modal>
         </View>
-
       </View>
-    )
+    );
   }
 
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: COLORS.white
-    }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.white,
+      }}
+    >
       <StatusBar hidden={true} />
-      <View style={{
-        marginHorizontal: 12
-      }}>
+      <View
+        style={{
+          marginHorizontal: 12,
+        }}
+      >
         {renderHeader()}
       </View>
       {renderAppSettings()}
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f8f8',
     padding: 16,
-    marginTop: 16
+    marginTop: 16,
   },
   title: {
     fontSize: 24,
@@ -235,7 +249,7 @@ const styles = StyleSheet.create({
   settingLabel: {
     fontSize: 16,
     color: '#333',
-    fontFamily: 'regular'
+    fontFamily: 'regular',
   },
   modalButton: {
     paddingVertical: 8,
@@ -245,12 +259,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderWidth: 1,
     borderColor: COLORS.primary,
-
   },
   modalButtonText: {
     fontSize: 16,
     color: COLORS.primary,
-    fontFamily: 'regular'
+    fontFamily: 'regular',
   },
   modalContainer: {
     flex: 1,
@@ -298,4 +311,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Settings
+export default Settings;

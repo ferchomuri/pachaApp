@@ -1,48 +1,48 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import React, { useState, useReducer, useCallback, useEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { commonStyles } from '../styles/CommonStyles'
-import { COLORS, SIZES, icons } from '../constants'
-import Input from '../components/Input'
-import { validateInput } from '../utils/actions/formActions'
-import { reducer } from '../utils/reducers/formReducers'
-import Button from '../components/Button'
-import { StatusBar } from 'expo-status-bar'
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState, useReducer, useCallback, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { commonStyles } from '../styles/CommonStyles';
+import { COLORS, SIZES, icons } from '../constants';
+import Input from '../components/Input';
+import { validateInput } from '../utils/actions/formActions';
+import { reducer } from '../utils/reducers/formReducers';
+import Button from '../components/Button';
+import { StatusBar } from 'expo-status-bar';
 
 const initialState = {
   inputValues: {
     creditCardHolderName: '',
     creditCardNumber: '',
     creditCardExpiryDate: '',
-    cvv: ''
+    cvv: '',
   },
   inputValidities: {
     creditCardHolderName: false,
     creditCardNumber: false,
     creditCardExpiryDate: false,
-    cvv: false
+    cvv: false,
   },
   formIsValid: false,
-}
+};
 
 const AddNewPaymentMethod = ({ navigation }) => {
-  const [error, setError] = useState(null)
-  const [formState, dispatchFormState] = useReducer(reducer, initialState)
+  const [error, setError] = useState(null);
+  const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
   const inputChangedHandler = useCallback(
     (inputId, inputValue) => {
-      const result = validateInput(inputId, inputValue)
-      dispatchFormState({ inputId, validationResult: result, inputValue })
+      const result = validateInput(inputId, inputValue);
+      dispatchFormState({ inputId, validationResult: result, inputValue });
     },
     [dispatchFormState]
-  )
+  );
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An error occured', error)
+      Alert.alert('An error occured', error);
     }
-  }, [error])
+  }, [error]);
   const renderHeader = () => {
     const navigation = useNavigation();
 
@@ -52,21 +52,19 @@ const AddNewPaymentMethod = ({ navigation }) => {
           flexDirection: 'row',
           alignItems: 'center',
           marginTop: 20,
-        }}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={commonStyles.header1Icon}
-        >
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.goBack()} style={commonStyles.header1Icon}>
           <Image
-            resizeMode='contain'
+            resizeMode="contain"
             source={icons.close}
             style={{ height: 24, width: 24, tintColor: COLORS.black }}
           />
         </TouchableOpacity>
         <Text style={{ marginLeft: 12, fontSize: 17, fontFamily: 'regular' }}>Add Card</Text>
       </View>
-    )
-  }
+    );
+  };
 
   const renderPaymentForm = () => {
     return (
@@ -116,8 +114,8 @@ const AddNewPaymentMethod = ({ navigation }) => {
           </View>
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -129,18 +127,18 @@ const AddNewPaymentMethod = ({ navigation }) => {
           style={{
             position: 'absolute',
             bottom: 30,
-            width: SIZES.width - 32
+            width: SIZES.width - 32,
           }}
         >
           <Button
             filled
             title="ADD"
-            onPress={() => navigation.navigate("AddNewPaymentMethodDeclined")}
+            onPress={() => navigation.navigate('AddNewPaymentMethodDeclined')}
           />
         </View>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default AddNewPaymentMethod
+export default AddNewPaymentMethod;

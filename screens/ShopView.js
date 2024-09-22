@@ -1,19 +1,23 @@
-import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, FONTS, SIZES, images, icons } from '../constants'
-import { commonStyles } from '../styles/CommonStyles'
-import { useNavigation } from '@react-navigation/native'
-import { ScrollView } from 'react-native-virtualized-view'
-import { MaterialCommunityIcons, Octicons, Fontisto, AntDesign, Ionicons } from "@expo/vector-icons"
-import { recentKeywords, products } from '../data/utils'
-import { Modal } from 'react-native'
-import Button from '../components/Button'
-import { StatusBar } from 'expo-status-bar'
-
+import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, FONTS, SIZES, images, icons } from '../constants';
+import { commonStyles } from '../styles/CommonStyles';
+import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-virtualized-view';
+import {
+  MaterialCommunityIcons,
+  Octicons,
+  Fontisto,
+  AntDesign,
+  Ionicons,
+} from '@expo/vector-icons';
+import { recentKeywords, products } from '../data/utils';
+import { Modal } from 'react-native';
+import Button from '../components/Button';
+import { StatusBar } from 'expo-status-bar';
 
 const ShopView = () => {
-
   const [modalVisible, setModalVisible] = useState(false);
 
   const renderHeader = () => {
@@ -22,12 +26,12 @@ const ShopView = () => {
       <View style={styles.headerContainer}>
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={commonStyles.header1Icon}>
-            <Image resizeMode='contain' source={icons.arrowLeft} style={styles.arrowLeftIcon} />
+            <Image resizeMode="contain" source={icons.arrowLeft} style={styles.arrowLeftIcon} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Shop View</Text>
         </View>
         <TouchableOpacity onPress={() => setModalVisible(true)} style={commonStyles.header1Icon}>
-          <Image resizeMode='contain' source={icons.more} style={styles.moreIcon} />
+          <Image resizeMode="contain" source={icons.more} style={styles.moreIcon} />
         </TouchableOpacity>
       </View>
     );
@@ -37,11 +41,11 @@ const ShopView = () => {
     const navigation = useNavigation();
     return (
       <View style={{ marginTop: 16 }}>
-        <Image source={images.shop2} resizeMode='contain' style={styles.shopImage} />
+        <Image source={images.shop2} resizeMode="contain" style={styles.shopImage} />
         <Text style={styles.shopTitle}>Mercedes House</Text>
         <Text style={styles.shopDescription}>
-          Maecenas sed diam eget risus varius blandit sit amet non magna. Integer posuere erat a ante venenatis dapibus
-          posuere velit aliquet.
+          Maecenas sed diam eget risus varius blandit sit amet non magna. Integer posuere erat a
+          ante venenatis dapibus posuere velit aliquet.
         </Text>
         <View style={styles.detailsRow}>
           <View style={styles.detailsItem}>
@@ -49,7 +53,11 @@ const ShopView = () => {
             <Text style={styles.detailText}>4.7</Text>
           </View>
           <View style={styles.detailsItem}>
-            <MaterialCommunityIcons name="truck-delivery-outline" size={24} color={COLORS.primary} />
+            <MaterialCommunityIcons
+              name="truck-delivery-outline"
+              size={24}
+              color={COLORS.primary}
+            />
             <Text style={styles.detailText}>Free</Text>
           </View>
           <View style={styles.detailsItem}>
@@ -66,7 +74,8 @@ const ShopView = () => {
               <TouchableOpacity
                 onPress={() => navigation.navigate('CarByKeywords')}
                 style={styles.keywordButton}
-                key={index}>
+                key={index}
+              >
                 <Text style={styles.keywordText}>{item.name}</Text>
               </TouchableOpacity>
             )}
@@ -86,13 +95,17 @@ const ShopView = () => {
             <TouchableOpacity
               onPress={() => navigation.navigate('Detail')}
               key={index}
-              style={styles.productItem}>
-              <Image source={item.image} resizeMode='contain' style={styles.productImage} />
+              style={styles.productItem}
+            >
+              <Image source={item.image} resizeMode="contain" style={styles.productImage} />
               <Text style={styles.productName}>{item.name}</Text>
               <Text style={styles.shopName}>{item.shopName}</Text>
               <View style={styles.priceContainer}>
                 <Text style={styles.priceText}>${item.price}</Text>
-                <TouchableOpacity onPress={() => console.log('Add to favourite')} style={styles.addButton}>
+                <TouchableOpacity
+                  onPress={() => console.log('Add to favourite')}
+                  style={styles.addButton}
+                >
                   <AntDesign name="plus" size={12} color={COLORS.white} />
                 </TouchableOpacity>
               </View>
@@ -111,15 +124,15 @@ const ShopView = () => {
 
     const handleOfferSelection = (offer) => {
       setSelectedOffer(offer);
-    }
+    };
 
     const handlePriceSelection = (price) => {
       setSelectedPrice(price);
-    }
+    };
 
     const handleTimeSelection = (time) => {
-      setSelectedTime(time)
-    }
+      setSelectedTime(time);
+    };
     return (
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <TouchableOpacity
@@ -135,7 +148,7 @@ const ShopView = () => {
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <View
               style={{
-                height: "auto",
+                height: 'auto',
                 width: SIZES.width * 0.9,
                 borderRadius: 12,
                 backgroundColor: COLORS.white,
@@ -148,8 +161,9 @@ const ShopView = () => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  paddingVertical: 12
-                }}>
+                  paddingVertical: 12,
+                }}
+              >
                 <Text style={{ fontSize: 17, fontFamily: 'bold' }}>Filter your search</Text>
                 <TouchableOpacity
                   onPress={() => setModalVisible(false)}
@@ -160,150 +174,145 @@ const ShopView = () => {
                     style={{
                       height: 24,
                       width: 24,
-                      tintColor: COLORS.black
+                      tintColor: COLORS.black,
                     }}
                   />
                 </TouchableOpacity>
               </View>
               <View>
-                <Text style={{ fontSize: 13, fontFamily: 'regular', marginBottom: 10 }}>OFFERS</Text>
-                <View style={{ flexDirection: "row", flexWrap: 'wrap', marginVertical: 13 }}>
+                <Text style={{ fontSize: 13, fontFamily: 'regular', marginBottom: 10 }}>
+                  OFFERS
+                </Text>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginVertical: 13 }}>
                   <TouchableOpacity
                     style={[
                       styles.checkboxContainer,
-                      selectedOffer === "Free Shipping" && styles.selectedCheckbox
+                      selectedOffer === 'Free Shipping' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handleOfferSelection("Free Shipping")}
+                    onPress={() => handleOfferSelection('Free Shipping')}
                   >
-                    <Text style={[selectedOffer === "Free Shipping" && styles.checkboxText]}>Free Shipping</Text>
+                    <Text style={[selectedOffer === 'Free Shipping' && styles.checkboxText]}>
+                      Free Shipping
+                    </Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={[
                       styles.checkboxContainer,
-                      selectedOffer === "Pick Up" && styles.selectedCheckbox
+                      selectedOffer === 'Pick Up' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handleOfferSelection("Pick Up")}
+                    onPress={() => handleOfferSelection('Pick Up')}
                   >
-                    <Text style={[selectedOffer === "Pick Up" && styles.checkboxText]}>Pick Up</Text>
+                    <Text style={[selectedOffer === 'Pick Up' && styles.checkboxText]}>
+                      Pick Up
+                    </Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={[
                       styles.checkboxContainer,
-                      selectedOffer === "Offer" && styles.selectedCheckbox
+                      selectedOffer === 'Offer' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handleOfferSelection("Offer")}
+                    onPress={() => handleOfferSelection('Offer')}
                   >
-                    <Text style={
-                      [
-                        selectedOffer === "Offer" && styles.checkboxText
-                      ]
-                    }>Offer</Text>
+                    <Text style={[selectedOffer === 'Offer' && styles.checkboxText]}>Offer</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[
                       styles.checkboxContainer,
-                      selectedOffer === "Oline payment available" && styles.selectedCheckbox
+                      selectedOffer === 'Oline payment available' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handleOfferSelection("Oline payment available")}
+                    onPress={() => handleOfferSelection('Oline payment available')}
                   >
-                    <Text style={
-                      [
-                        selectedOffer === "Oline payment available" && styles.checkboxText
-                      ]
-                    }>Oline payment available</Text>
+                    <Text
+                      style={[selectedOffer === 'Oline payment available' && styles.checkboxText]}
+                    >
+                      Oline payment available
+                    </Text>
                   </TouchableOpacity>
-
                 </View>
               </View>
 
               <View>
-                <Text style={{ fontSize: 13, fontFamily: 'regular', marginBottom: 2 }}>DELIVER TIME</Text>
+                <Text style={{ fontSize: 13, fontFamily: 'regular', marginBottom: 2 }}>
+                  DELIVER TIME
+                </Text>
 
-                <View style={{ flexDirection: "row", marginVertical: 13 }}>
+                <View style={{ flexDirection: 'row', marginVertical: 13 }}>
                   <TouchableOpacity
                     style={[
                       styles.checkboxContainer,
-                      selectedTime === "1" && styles.selectedCheckbox
+                      selectedTime === '1' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handleTimeSelection("1")}
+                    onPress={() => handleTimeSelection('1')}
                   >
-                    <Text style={[selectedTime === "1" && styles.checkboxText]}>1 days</Text>
+                    <Text style={[selectedTime === '1' && styles.checkboxText]}>1 days</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={[
                       styles.checkboxContainer,
-                      selectedTime === "2" && styles.selectedCheckbox
+                      selectedTime === '2' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handleTimeSelection("2")}
+                    onPress={() => handleTimeSelection('2')}
                   >
-                    <Text style={[selectedTime === "2" && styles.checkboxText]}>2 days</Text>
+                    <Text style={[selectedTime === '2' && styles.checkboxText]}>2 days</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={[
                       styles.checkboxContainer,
-                      selectedTime === "3" && styles.selectedCheckbox
+                      selectedTime === '3' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handleTimeSelection("3")}
+                    onPress={() => handleTimeSelection('3')}
                   >
-                    <Text style={
-                      [
-                        selectedTime === "3" && styles.checkboxText
-                      ]
-                    }>3 days</Text>
+                    <Text style={[selectedTime === '3' && styles.checkboxText]}>3 days</Text>
                   </TouchableOpacity>
-
                 </View>
-
               </View>
 
               <View>
-                <Text style={{ fontSize: 13, fontFamily: 'regular', marginBottom: 10 }}>PRICING</Text>
-                <View style={{ flexDirection: "row", marginVertical: 13 }}>
+                <Text style={{ fontSize: 13, fontFamily: 'regular', marginBottom: 10 }}>
+                  PRICING
+                </Text>
+                <View style={{ flexDirection: 'row', marginVertical: 13 }}>
                   <TouchableOpacity
                     style={[
                       styles.roundedCheckBoxContainer,
-                      selectedPrice === "$" && styles.selectedCheckbox
+                      selectedPrice === '$' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handlePriceSelection("$")}
+                    onPress={() => handlePriceSelection('$')}
                   >
-                    <Text style={[selectedPrice === "$" && styles.checkboxText]}>$</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={[
-                      styles.roundedCheckBoxContainer,
-                      selectedPrice === "$$" && styles.selectedCheckbox
-                    ]}
-                    onPress={() => handlePriceSelection("$$")}
-                  >
-                    <Text style={[selectedPrice === "$$" && styles.checkboxText]}>$$</Text>
+                    <Text style={[selectedPrice === '$' && styles.checkboxText]}>$</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={[
                       styles.roundedCheckBoxContainer,
-                      selectedPrice === "$$$" && styles.selectedCheckbox
+                      selectedPrice === '$$' && styles.selectedCheckbox,
                     ]}
-                    onPress={() => handlePriceSelection("$$$")}
+                    onPress={() => handlePriceSelection('$$')}
                   >
-                    <Text style={
-                      [
-                        selectedPrice === "$$$" && styles.checkboxText
-                      ]
-                    }>$$$</Text>
+                    <Text style={[selectedPrice === '$$' && styles.checkboxText]}>$$</Text>
                   </TouchableOpacity>
 
-
+                  <TouchableOpacity
+                    style={[
+                      styles.roundedCheckBoxContainer,
+                      selectedPrice === '$$$' && styles.selectedCheckbox,
+                    ]}
+                    onPress={() => handlePriceSelection('$$$')}
+                  >
+                    <Text style={[selectedPrice === '$$$' && styles.checkboxText]}>$$$</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
 
               <View>
-                <Text style={{ fontSize: 13, fontFamily: 'regular', marginBottom: 10 }}>RATING</Text>
-                <View style={{ flexDirection: "row", marginVertical: 13 }}>
+                <Text style={{ fontSize: 13, fontFamily: 'regular', marginBottom: 10 }}>
+                  RATING
+                </Text>
+                <View style={{ flexDirection: 'row', marginVertical: 13 }}>
                   <TouchableOpacity
                     style={styles.starContainer}
                     onPress={() => setIsStarSelected(!isStarSelected)}
@@ -362,15 +371,15 @@ const ShopView = () => {
                 filled
                 onPress={() => setModalVisible(false)}
                 style={{
-                  marginBottom: 12
+                  marginBottom: 12,
                 }}
               />
             </View>
           </View>
         </TouchableOpacity>
       </Modal>
-    )
-  }
+    );
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <StatusBar hidden={true} />
@@ -383,8 +392,8 @@ const ShopView = () => {
       </View>
       {renderSearchModal()}
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   checkboxContainer: {
@@ -396,11 +405,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
-    marginBottom: 12
-
+    marginBottom: 12,
   },
   roundedCheckBoxContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     justifyContent: 'center',
     height: 48,
     width: 48,
@@ -408,15 +416,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.gray,
     backgroundColor: COLORS.gray,
-    marginRight: 12
+    marginRight: 12,
   },
   selectedCheckbox: {
-    backgroundColor: COLORS.primary
+    backgroundColor: COLORS.primary,
   },
   checkboxText: {
     color: COLORS.white,
     fontSize: 16,
-    fontFamily: 'regular'
+    fontFamily: 'regular',
   },
   starContainer: {
     height: 48,
@@ -426,7 +434,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.secondaryGray,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 6
+    marginRight: 6,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -547,6 +555,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLORS.primary,
   },
-})
+});
 
-export default ShopView
+export default ShopView;
