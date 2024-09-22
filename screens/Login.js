@@ -7,10 +7,10 @@ import * as Animatable from 'react-native-animatable';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { COLORS, FONTS, images, SIZES } from '../constants';
-import authService from '../services/auth/authServices';
 import { commonStyles } from '../styles/CommonStyles';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
+import authService from '../services/auth/authServices';
 
 const isTestMode = true;
 
@@ -49,8 +49,24 @@ const Login = ({ navigation }) => {
   const loginWithGoogle = async () => {
     try {
       setIsLoading(true);
-      const userInfo = await authService.loginWithGoogle();
-      setUserInfo(userInfo);
+      await authService.loginWithGoogle();
+      navigation.navigate('LocationAccess');
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loginClassic = async () => {
+    try {
+      setIsLoading(true);
+      await authService.loginClassic(
+        formState.inputValues['email'],
+        formState.inputValues['password']
+      );
+      navigation.navigate('LocationAccess');
       setError(null);
     } catch (error) {
       setError(error.message);
@@ -110,7 +126,7 @@ const Login = ({ navigation }) => {
           title="Iniciar Sesión"
           isLoading={isLoading}
           filled
-          onPress={() => navigation.navigate('LocationAccess')}
+          onPress={loginClassic}
           style={commonStyles.btn}
         />
         <View style={commonStyles.center}>

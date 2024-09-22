@@ -1,22 +1,22 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import IAuthService from './IAuthService';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import userService from '../user/userService';
+import loggerService from '../logger/loggerService';
 
-const userService = new UserService();
-
-class FirebaseAuthService extends IAuthService {
-  configure() {
+export default {
+  configure: () => {
     try {
       GoogleSignin.configure({
         webClientId: '966046579398-da6g5utpg30jb8tff3he4bmpc8itc5fr.apps.googleusercontent.com',
       });
+      loggerService.info('Configuración de Google Sign-In completada');
     } catch (error) {
-      console.error('Error en la configuración:', error.code, error.message);
+      loggerService.error('Error en la configuración de Google Sign-In:', error);
       throw error;
     }
-  }
+  },
 
-  async loginWithGoogle() {
+  loginWithGoogle: async () => {
     try {
       await GoogleSignin.hasPlayServices();
 
@@ -26,38 +26,68 @@ class FirebaseAuthService extends IAuthService {
 
       await auth().signInWithCredential(googleCredential);
 
-      await userService.createUserDocument(userInfo.data);
+      const user = await userService.createUserDocument(userInfo.data.user);
 
-      return userInfo;
-    } catch (error) {
-      console.error('Error en el login:', error.code, error.message);
-      throw error;
-    }
-  }
-
-  async logout() {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-    } catch (error) {
-      console.error('Error en el logout:', error.code, error.message);
-      throw error;
-    }
-  }
-
-  async register(email, password) {
-    try {
-      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
-      const user = userCredential.user;
-
-      await userService.createUserDocument(user);
-
+      loggerService.info('Inicio de sesión con Google completado');
       return user;
     } catch (error) {
-      console.error('Error en el registro:', error.code, error.message);
+      loggerService.error('Error en el inicio de sesión con Google:', error);
       throw error;
     }
-  }
-}
+  },
 
-export default new FirebaseAuthService();
+  loginClassic: async (email, password) => {
+    try {
+      const userCredential = await auth().signInWithEmailAndPassword(email, password);
+
+      loggerService.info('Inicio de sesión clásico completado');
+
+      return userCredential;
+    } catch (error) {
+      loggerService.error('Error en el inicio de sesión clásico:' + error + ' / ' + email + ' / ');
+      throw error;
+    }
+  },
+
+  logout: async () => {
+    try {
+      if (GoogleSignin && GoogleSignin.isSignedIn) {
+        const isSignedIn = await GoogleSignin.isSignedIn();
+        if (isSignedIn) {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+          loggerService.info('Cierre de sesión con Google completado');
+          return;
+        }
+      }
+
+      loggerService.info('Cierre de sesión completado');
+      await auth().signOut();
+    } catch (error) {
+      loggerService.error('Error en el cierre de sesión:' + error);
+      throw error;
+    }
+  },
+
+  register: async (name, lastName, email, password) => {
+    try {
+      await auth().createUserWithEmailAndPassword(email, password);
+      const user = {
+        email,
+        firstName: name,
+        lastName,
+      };
+
+      const newUser = await userService.createUserDocument(user);
+
+      loggerService.info('Registro completado');
+      return newUser;
+    } catch (error) {
+      loggerService.error(
+        'Error en el registro:',
+        error + ' / ' + email + ' / ' + name + ' / ' + lastName
+      );
+      throw error;
+    }
+  },
+};

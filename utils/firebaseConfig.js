@@ -1,31 +1,52 @@
 import firestore from '@react-native-firebase/firestore';
 
-class FirestoreService {
-  constructor(collectionName) {
-    this.collection = firestore().collection(collectionName);
-  }
-
-  async createDocument(docId, data) {
+export default {
+  createDocument: async (collectionName, data) => {
     try {
-      await this.collection.doc(docId).set(data);
+      const collection = firestore().collection(collectionName);
+      if (!data.id) {
+        delete data.id;
+        await collection.add(data);
+      } else {
+        await collection
+          .doc(data.id)
+          .set(data)
+          .then(() => {
+            console.log('Document successfully written!');
+          });
+      }
     } catch (error) {
-      console.error('Error creating document:', error.code, error.message);
+      firestore()
+        .collection('logs')
+        .add({
+          level: 'ERROR',
+          message: `Error creating document: ${error}`,
+          timestamp: firestore.FieldValue.serverTimestamp(),
+        });
       throw error;
     }
-  }
+  },
 
-  async updateDocument(docId, data) {
+  updateDocument: async (collectionName, docId, data) => {
     try {
-      await this.collection.doc(docId).update(data);
+      const collection = firestore().collection(collectionName);
+      await collection.doc(docId).update(data);
     } catch (error) {
-      console.error('Error updating document:', error.code, error.message);
+      firestore()
+        .collection('logs')
+        .add({
+          level: 'ERROR',
+          message: `Error updateDocument: ${error}`,
+          timestamp: firestore.FieldValue.serverTimestamp(),
+        });
       throw error;
     }
-  }
+  },
 
-  async getDocument(docId) {
+  getDocument: async (collectionName, docId) => {
     try {
-      const doc = await this.collection.doc(docId).get();
+      const collection = firestore().collection(collectionName);
+      const doc = await collection.doc(docId);
       if (doc.exists) {
         return doc.data();
       } else {
@@ -33,29 +54,59 @@ class FirestoreService {
         return null;
       }
     } catch (error) {
-      console.error('Error getting document:', error.code, error.message);
+      firestore()
+        .collection('logs')
+        .add({
+          level: 'ERROR',
+          message: `Error getDocument: ${error}`,
+          timestamp: firestore.FieldValue.serverTimestamp(),
+        });
       throw error;
     }
-  }
+  },
 
-  async deleteDocument(docId) {
+  deleteDocument: async (collectionName, docId) => {
     try {
-      await this.collection.doc(docId).delete();
+      const collection = firestore().collection(collectionName);
+      await collection.doc(docId).delete();
     } catch (error) {
-      console.error('Error deleting document:', error.code, error.message);
+      firestore()
+        .collection('logs')
+        .add({
+          level: 'ERROR',
+          message: `Error deleteDocument: ${error}`,
+          timestamp: firestore.FieldValue.serverTimestamp(),
+        });
       throw error;
     }
-  }
+  },
 
-  async getAllDocuments() {
+  getAllDocuments: async (collectionName) => {
     try {
-      const collectionSnapshot = await this.collection.get();
+      const collection = firestore().collection(collectionName);
+      const collectionSnapshot = await collection.get();
       return collectionSnapshot.docs.map((doc) => doc.data());
     } catch (error) {
-      console.error('Error getting documents:', error.code, error.message);
+      firestore()
+        .collection('logs')
+        .add({
+          level: 'ERROR',
+          message: `Error getAllDocuments: ${error}`,
+          timestamp: firestore.FieldValue.serverTimestamp(),
+        });
       throw error;
     }
-  }
-}
+  },
 
-export { firestore, FirestoreService };
+  getServerTimestamp: async () => {
+    return firestore.FieldValue.serverTimestamp();
+  },
+
+  logger: (level, message) => {
+    firestore().collection('logs').add({
+      level,
+      message,
+      timestamp: firestore.FieldValue.serverTimestamp(),
+    });
+  },
+};

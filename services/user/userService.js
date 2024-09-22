@@ -1,66 +1,77 @@
-import { FirestoreService } from '../utils/firebaseConfig';
-import IUserService from './IUserService';
-import { firestore } from 'firebase'; // Asegúrate de que esta importación sea correcta según tu configuración
+import firestoreService from '../../utils/firebaseConfig';
+import loggerService from '../logger/loggerService';
 
-class UserService extends IUserService {
-  constructor() {
-    super();
-    this.firestoreService = new FirestoreService('users');
-  }
+const collection = 'users';
 
-  async createUserDocument(user) {
+export default {
+  createUserDocument: async (user) => {
     try {
-      console.log('Creating user document:', user);
-      await this.firestoreService.createDocument(user.uid, {
+      const id = user.id;
+
+      if (id) {
+        const existingUser = await firestoreService.getDocument(collection, id);
+        if (existingUser) {
+          return existingUser;
+        }
+      }
+      await firestoreService.createDocument(collection, {
+        id: id,
         email: user.email,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-        fullName: user.displayName,
-        firstName: user.displayName.split(' ')[0],
-        lastName: user.displayName.split(' ')[1],
-        photoURL: user.photoURL,
-        lastLoginAt: firestore.FieldValue.serverTimestamp(),
+        createdAt: firestoreService.getServerTimestamp(),
+        firstName: user.givenName || user.firstName,
+        lastName: user.familyName || user.lastName,
+        photo: user.photo || null,
+        lastLoginAt: firestoreService.getServerTimestamp(),
+        completedOnboarding: false,
+        role: null,
       });
+
+      loggerService.info('Creación de usuario completada');
+
+      return user;
     } catch (error) {
-      console.error('Error al crear el documento del usuario:', error.code, error.message);
+      loggerService.error('Error al crear usuario:', error + ' ' + user);
       throw error;
     }
-  }
+  },
 
-  async getUserDocument(uid) {
+  getUserDocument: async (uid) => {
     try {
-      return await this.firestoreService.getDocument(uid);
+      await firestoreService.getDocument(uid);
+      return loggerService.info('Obtención de usuario completada');
     } catch (error) {
-      console.error('Error getting document:', error.code, error.message);
+      loggerService.error('Error al obtener usuario:', error + ' ' + uid);
       throw error;
     }
-  }
+  },
 
-  async getAllUsers() {
+  getAllUsers: async () => {
     try {
-      return await this.firestoreService.getAllDocuments();
+      await firestoreService.getAllDocuments();
+      return loggerService.info('Obtención de usuarios completada');
     } catch (error) {
-      console.error('Error getting documents:', error.code, error.message);
+      console.error('Error al obtener todos los usuario:', error.code, error.message);
       throw error;
     }
-  }
+  },
 
-  async updateUserDocument(uid, data) {
+  updateUserDocument: async (uid, data) => {
     try {
-      await this.firestoreService.updateDocument(uid, data);
+      await firestoreService.updateDocument(uid, data);
+      return loggerService.info('Actualización de usuario completada');
     } catch (error) {
-      console.error('Error updating document:', error.code, error.message);
+      loggerService.error('Error al actualizar usuario:', error + ' ' + uid + ' ' + data);
       throw error;
     }
-  }
+  },
 
-  async deleteUserDocument(uid) {
+  deleteUserDocument: async (uid) => {
     try {
-      await this.firestoreService.deleteDocument(uid);
+      await firestoreService.deleteDocument(uid);
+      return loggerService.info('Eliminación de usuario completada');
     } catch (error) {
-      console.error('Error deleting document:', error.code, error.message);
+      loggerService.error('Error al eliminar usuario:', error + ' ' + uid);
       throw error;
     }
-  }
-}
-
-export { UserService };
+  },
+};

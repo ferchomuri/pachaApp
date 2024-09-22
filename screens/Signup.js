@@ -8,19 +8,17 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { COLORS, images, SIZES } from '../constants';
-import authService from '../services/auth/authServices';
 import { commonStyles } from '../styles/CommonStyles';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
-
-const isTestMode = true;
+import authService from '../services/auth/authServices';
 
 const initialState = {
   inputValues: {
-    fullName: isTestMode ? 'John Doe' : '',
-    email: isTestMode ? 'example@gmail.com' : '',
-    password: isTestMode ? '**********' : '',
-    confirmPassword: isTestMode ? '**********' : '',
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   },
   inputValidities: {
     fullName: false,
@@ -63,6 +61,8 @@ const Signup = ({ navigation }) => {
     try {
       setIsLoading(true);
       const user = await authService.register(
+        formState.inputValues['name'],
+        formState.inputValues['lastName'],
         formState.inputValues['email'],
         formState.inputValues['password']
       );
@@ -111,10 +111,18 @@ const Signup = ({ navigation }) => {
         <KeyboardAwareScrollView>
           <Text style={commonStyles.inputHeader}>Nombre</Text>
           <Input
-            id="fullName"
+            id="name"
             onInputChanged={inputChangedHandler}
-            errorText={formState.inputValidities['fullName']}
-            placeholder="Fernando Murillo"
+            errorText={formState.inputValidities['name']}
+            placeholder="Tu nombre"
+            placeholderTextColor={COLORS.black}
+          />
+          <Text style={commonStyles.inputHeader}>Apellido</Text>
+          <Input
+            id="lastName"
+            onInputChanged={inputChangedHandler}
+            errorText={formState.inputValidities['lastName']}
+            placeholder="Tu apellido"
             placeholderTextColor={COLORS.black}
           />
           <Text style={commonStyles.inputHeader}>Correo</Text>
@@ -132,7 +140,7 @@ const Signup = ({ navigation }) => {
             errorText={formState.inputValidities['password']}
             autoCapitalize="none"
             id="password"
-            placeholder="*************"
+            placeholder=""
             placeholderTextColor={COLORS.black}
             secureTextEntry={true}
           />
@@ -142,7 +150,7 @@ const Signup = ({ navigation }) => {
             errorText={formState.inputValidities['passwordConfirm']}
             autoCapitalize="none"
             id="passwordConfirm"
-            placeholder="*************"
+            placeholder=""
             placeholderTextColor={COLORS.black}
             secureTextEntry={true}
           />
