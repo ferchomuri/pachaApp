@@ -39,3 +39,6 @@ google-services.json
 # environment
 .env
 /.env
+
+android/
+ios/

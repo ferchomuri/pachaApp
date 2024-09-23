@@ -2,6 +2,9 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import userService from '../user/userService';
 import loggerService from '../logger/loggerService';
+import useUserStore from '../../store/user/userStore';
+
+const { setUser } = useUserStore();
 
 export default {
   configure: () => {
@@ -27,6 +30,9 @@ export default {
       await auth().signInWithCredential(googleCredential);
 
       const user = await userService.createUserDocument(userInfo.data.user);
+      console.log('user', user);
+
+      setUser(user);
 
       loggerService.info('Inicio de sesión con Google completado');
       return user;
@@ -39,6 +45,8 @@ export default {
   loginClassic: async (email, password) => {
     try {
       const userCredential = await auth().signInWithEmailAndPassword(email, password);
+      console.log('userCredential', userCredential);
+      setUser(userCredential.user);
 
       loggerService.info('Inicio de sesión clásico completado');
 
