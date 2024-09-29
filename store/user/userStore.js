@@ -1,28 +1,18 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { userStorage } from './userMmkv';
+import storage from './userMmkv';
 
-const useUserStore = create(
+export const userStore = create(
   persist(
     (set, get) => ({
-      user: {
-        name: null,
-        lastName: null,
-        email: null,
-        phone: null,
-        address: null,
-        city: null,
-        country: null,
-        photo: null,
-        type: null,
-      },
+      user: null,
       setUser: (user) => set({ user }),
+      getUser: () => get().user,
+      clearUser: () => set({ user: null }),
     }),
     {
-      name: 'user-storage',
-      getStorage: createJSONStorage(() => userStorage),
+      name: 'user',
+      storage: createJSONStorage(() => storage),
     }
   )
 );
-
-export default useUserStore;

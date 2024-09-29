@@ -1,18 +1,32 @@
 import { MMKV } from 'react-native-mmkv';
 
-export const storage = new MMKV({
-  id: 'user-storage',
+const mmkv = new MMKV({
+  id: 'user',
 });
 
-export const userStorage = {
-  setItem: (name, value) => {
-    return storage.set(name, value);
+const storage = {
+  setItem: (key, value) => {
+    try {
+      mmkv.set(key, value);
+    } catch (error) {
+      console.error(`Error setting item with key "${key}":`, error);
+    }
   },
-  getItem: (name) => {
-    const value = storage.getString(name);
-    return value ?? null;
+  getItem: (key) => {
+    try {
+      return mmkv.getString(key);
+    } catch (error) {
+      console.error(`Error getting item with key "${key}":`, error);
+      return null;
+    }
   },
-  removeItem: (name) => {
-    return storage.delete(name);
+  removeItem: (key) => {
+    try {
+      mmkv.delete(key);
+    } catch (error) {
+      console.error(`Error removing item with key "${key}":`, error);
+    }
   },
 };
+
+export default storage;
