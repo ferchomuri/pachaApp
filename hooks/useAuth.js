@@ -59,9 +59,10 @@ const useAuth = () => {
       }
 
       const userCredential = await auth().signInWithEmailAndPassword(email, password);
-      console.log('userCredential', userCredential);
+      const user = await userService.getUserDocument({ email });
+      console.log(user);
 
-      setUser(userCredential.user);
+      setUser(user);
 
       loggerService.info('Inicio de sesión clásico completado');
 
