@@ -59,10 +59,12 @@ import {
 } from '../screens';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigation from './BottomTabNavigation';
+import useAuth from '../hooks/useAuth';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
+  const { configureGoogleSignIn } = useAuth();
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -83,6 +85,8 @@ const AppNavigation = () => {
     };
 
     checkIfFirstLaunch();
+
+    configureGoogleSignIn();
   }, []);
 
   if (isLoading) {

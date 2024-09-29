@@ -14,23 +14,27 @@ export default {
           return existingUser;
         }
       }
-      await firestoreService.createDocument(collection, {
+
+      const dataToSave = {
         id: id,
         email: user.email,
         createdAt: firestoreService.getServerTimestamp(),
         firstName: user.givenName || user.firstName,
         lastName: user.familyName || user.lastName,
         photo: user.photo || null,
+        phoneNumber: user.phoneNumber || null,
         lastLoginAt: firestoreService.getServerTimestamp(),
         completedOnboarding: false,
         role: null,
-      });
+      };
+
+      await firestoreService.createDocument(collection, dataToSave);
 
       loggerService.info('Creación de usuario completada');
 
-      return user;
+      return dataToSave;
     } catch (error) {
-      loggerService.error('Error al crear usuario:', error + ' ' + user);
+      loggerService.error(`Error al crear usuario: ${error} - user: ${user}`);
       throw error;
     }
   },
@@ -40,7 +44,7 @@ export default {
       await firestoreService.getDocument(uid);
       return loggerService.info('Obtención de usuario completada');
     } catch (error) {
-      loggerService.error('Error al obtener usuario:', error + ' ' + uid);
+      loggerService.error(`Error al obtener usuario: ${error} - uid: ${uid}`);
       throw error;
     }
   },
@@ -50,7 +54,7 @@ export default {
       await firestoreService.getAllDocuments();
       return loggerService.info('Obtención de usuarios completada');
     } catch (error) {
-      console.error('Error al obtener todos los usuario:', error.code, error.message);
+      console.error(`Error al obtener todos los usuario: ${error}`);
       throw error;
     }
   },
@@ -60,7 +64,7 @@ export default {
       await firestoreService.updateDocument(uid, data);
       return loggerService.info('Actualización de usuario completada');
     } catch (error) {
-      loggerService.error('Error al actualizar usuario:', error + ' ' + uid + ' ' + data);
+      loggerService.error(`Error al actualizar usuario: ${error} - uid: ${uid} - data: ${data}`);
       throw error;
     }
   },
@@ -70,7 +74,7 @@ export default {
       await firestoreService.deleteDocument(uid);
       return loggerService.info('Eliminación de usuario completada');
     } catch (error) {
-      loggerService.error('Error al eliminar usuario:', error + ' ' + uid);
+      loggerService.error(`Error al eliminar usuario: ${error} - uid: ${uid}`);
       throw error;
     }
   },

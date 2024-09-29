@@ -18,6 +18,8 @@ export default {
     ios: {
       supportsTablet: true,
       package: 'com.pacha.app',
+      bundleIdentifier: 'com.pacha.app',
+      googleServicesFile: './GoogleService-Info.plist',
     },
     android: {
       adaptiveIcon: {
@@ -26,11 +28,11 @@ export default {
       },
       config: {
         googleMaps: {
-          apiKey: process.env.MAPS_API_KEY,
+          apiKey: '1111-2222-3333-4444',
         },
       },
       package: 'com.pacha.app',
-      googleServicesFile: process.env.GOOGLE_SERVICES_JSON_ANDROID,
+      googleServicesFile: './google-services.json',
     },
     web: {
       favicon: './assets/images/favicon.png',
@@ -40,11 +42,24 @@ export default {
       '@react-native-google-signin/google-signin',
       '@react-native-firebase/app',
       '@react-native-firebase/auth',
+      'expo-build-properties',
+      // [
+      //   'expo-build-properties',
+      //   {
+      //     ios: {
+      //       newArchEnabled: true,
+      //     },
+      //     android: {
+      //       newArchEnabled: true,
+      //     },
+      //   },
+      // ],
     ],
     extra: {
       eas: {
         projectId: '2201d7fd-174b-49de-a974-b70e01f45639',
       },
     },
+    jsEngine: 'jsc',
   },
 };
