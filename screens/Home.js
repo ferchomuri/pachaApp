@@ -10,8 +10,11 @@ import { promoData } from '../data/promoData';
 import { categories, products } from '../data/utils';
 import CategoryItem from '../components/CategoryItem';
 import ProductCard from '../components/ProductCard';
+import { useUserStore } from '../hooks/useUserStore';
 
 const Home = ({ navigation }) => {
+  const { user } = useUserStore();
+
   /**
    *
    * @returns Render header
@@ -36,7 +39,11 @@ const Home = ({ navigation }) => {
             onPress={() => navigation.navigate('PersonalProfile')}
             style={styles.avatarContainer}
           >
-            <Image source={images.avatar} resizeMode="contain" style={styles.avatar} />
+            <Image
+              source={user?.photo ? { uri: user.photo } : images.avatar}
+              resizeMode="contain"
+              style={styles.avatar}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -70,7 +77,7 @@ const Home = ({ navigation }) => {
                 color: COLORS.black,
               }}
             >
-              Jonathan!
+              {user?.firstName}
             </Text>
           </View>
           <Text

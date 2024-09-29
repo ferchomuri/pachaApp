@@ -7,8 +7,11 @@ import { commonStyles } from '../styles/CommonStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import { useUserStore } from '../hooks/useUserStore';
 
 const PersonalProfile = () => {
+  const { user } = useUserStore();
+
   const renderHeader = () => {
     const navigation = useNavigation();
     return (
@@ -68,7 +71,7 @@ const PersonalProfile = () => {
         }}
       >
         <Image
-          source={images.avatar3}
+          source={user?.photo ? { uri: user.photo } : images.avatar}
           resizeMode="contain"
           style={{
             height: 100,
@@ -77,7 +80,9 @@ const PersonalProfile = () => {
           }}
         />
         <View style={{ marginLeft: 12 }}>
-          <Text style={{ ...FONTS.h4 }}>John Bulla</Text>
+          <Text style={{ ...FONTS.h4 }}>
+            {user.firstName} {user.lastName}
+          </Text>
           <Text
             style={{
               fontSize: 12,
@@ -86,7 +91,7 @@ const PersonalProfile = () => {
               marginVertical: 6,
             }}
           >
-            I love Bugatti Chiron
+            {user?.role === 'buyer' ? 'Comprador' : 'Vendedor'}
           </Text>
         </View>
       </View>
@@ -104,7 +109,9 @@ const PersonalProfile = () => {
               </View>
               <View style={{ flexDirection: 'column' }}>
                 <Text style={styles.boldBody}>Nombre Completo</Text>
-                <Text style={styles.textBody}>John Bulla</Text>
+                <Text style={styles.textBody}>
+                  {user.firstName} {user.lastName}
+                </Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -114,8 +121,8 @@ const PersonalProfile = () => {
                 <MaterialCommunityIcons name="email-outline" size={24} color="#413DFB" />
               </View>
               <View style={{ flexDirection: 'column' }}>
-                <Text style={styles.boldBody}>Email</Text>
-                <Text style={styles.textBody}>john@gmail.com</Text>
+                <Text style={styles.boldBody}>Correo Electrónico</Text>
+                <Text style={styles.textBody}>{user.email}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -125,8 +132,8 @@ const PersonalProfile = () => {
                 <Feather name="phone" size={24} color="#369BFF" />
               </View>
               <View style={{ flexDirection: 'column' }}>
-                <Text style={styles.boldBody}>Phone Number</Text>
-                <Text style={styles.textBody}>408-278-248</Text>
+                <Text style={styles.boldBody}>Teléfono</Text>
+                <Text style={styles.textBody}>{user.phoneNumber}</Text>
               </View>
             </View>
           </TouchableOpacity>

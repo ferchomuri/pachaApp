@@ -7,11 +7,15 @@ import { commonStyles } from '../styles/CommonStyles';
 import { Feather, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-virtualized-view';
 import { StatusBar } from 'expo-status-bar';
-import authServices from '../services/auth/authServices';
+import useAuth from '../hooks/useAuth';
+import { useUserStore } from '../hooks/useUserStore';
 
 const Profile = ({ navigation }) => {
+  const { logout } = useAuth();
+  const { user } = useUserStore();
+
   const handleLogout = async () => {
-    await authServices.logout();
+    await logout();
     navigation.navigate('Login');
   };
 
@@ -45,7 +49,7 @@ const Profile = ({ navigation }) => {
               fontFamily: 'regular',
             }}
           >
-            Profile
+            Perfil
           </Text>
         </View>
         <TouchableOpacity onPress={() => console.log('Pressed')} style={commonStyles.header1Icon}>
@@ -73,7 +77,7 @@ const Profile = ({ navigation }) => {
         }}
       >
         <Image
-          source={images.avatar3}
+          source={user?.photo ? { uri: user?.photo } : images.avatar}
           resizeMode="contain"
           style={{
             height: 100,
@@ -82,7 +86,9 @@ const Profile = ({ navigation }) => {
           }}
         />
         <View style={{ marginLeft: 12 }}>
-          <Text style={{ ...FONTS.h4 }}>John Bulla</Text>
+          <Text style={{ ...FONTS.h4 }}>
+            {user?.firstName} {user?.lastName}
+          </Text>
           <Text
             style={{
               fontSize: 12,
@@ -91,7 +97,7 @@ const Profile = ({ navigation }) => {
               marginVertical: 6,
             }}
           >
-            I love Bugatti Chiron
+            {user?.role === 'buyer' ? 'Comprador' : 'Vendedor'}
           </Text>
         </View>
       </View>
@@ -215,7 +221,7 @@ const Profile = ({ navigation }) => {
               <View style={styles.rounded}>
                 <Feather name="info" size={24} color={COLORS.primary} />
               </View>
-              <Text style={styles.textBody}>Prenguntas Frecuentes</Text>
+              <Text style={styles.textBody}>Preguntas Frecuentes</Text>
             </View>
             <View>
               <Image source={icons.arrowRight} style={styles.iconRight} />
@@ -243,7 +249,7 @@ const Profile = ({ navigation }) => {
               <View style={styles.rounded}>
                 <MaterialIcons name="logout" size={24} color="#FB4A59" />
               </View>
-              <Text style={styles.textBody}>Logout</Text>
+              <Text style={styles.textBody}>Cerrar Sesión</Text>
             </View>
             <View>
               <Image source={icons.arrowRight} style={styles.iconRight} />

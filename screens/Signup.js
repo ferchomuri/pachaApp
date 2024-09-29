@@ -11,7 +11,7 @@ import { COLORS, images, SIZES } from '../constants';
 import { commonStyles } from '../styles/CommonStyles';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
-import authService from '../services/auth/authServices';
+import useAuth from '../hooks/useAuth';
 
 const initialState = {
   inputValues: {
@@ -30,6 +30,7 @@ const initialState = {
 };
 
 const Signup = ({ navigation }) => {
+  const { register, loginWithGoogle } = useAuth();
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [formState, dispatchFormState] = useReducer(reducer, initialState);
@@ -46,7 +47,7 @@ const Signup = ({ navigation }) => {
   const handleLoginWithGoogle = async () => {
     try {
       setIsLoading(true);
-      const userInfo = await authService.loginWithGoogle();
+      const userInfo = await loginWithGoogle();
       setUserInfo(userInfo);
       navigation.navigate('LocationAccess');
       setError(null);
@@ -60,7 +61,7 @@ const Signup = ({ navigation }) => {
   const handleLoginClassic = async () => {
     try {
       setIsLoading(true);
-      const user = await authService.register(
+      const user = await register(
         formState.inputValues['name'],
         formState.inputValues['lastName'],
         formState.inputValues['email'],
@@ -75,10 +76,6 @@ const Signup = ({ navigation }) => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    authService.configure();
-  }, []);
 
   useEffect(() => {
     if (error) {

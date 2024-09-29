@@ -5,20 +5,32 @@
   },
   "build": {
     "development": {
+      "env": {
+        "GOOGLE_SERVICES_JSON_ANDROID_DEV": "./google-services.json"
+      },
       "developmentClient": true,
       "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
       "ios": {
         "resourceClass": "m1-medium",
         "simulator": true
       }
     },
     "preview": {
+      "env": {
+        "GOOGLE_SERVICES_JSON_ANDROID_DEV": "./google-services.json"
+      },
       "distribution": "internal",
       "ios": {
         "resourceClass": "m1-medium"
       }
     },
     "production": {
+      "env": {
+        "GOOGLE_SERVICES_JSON_ANDROID_DEV": "./google-services.json"
+      },
       "ios": {
         "resourceClass": "m1-medium"
       }

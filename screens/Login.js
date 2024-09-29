@@ -10,7 +10,7 @@ import { COLORS, FONTS, images, SIZES } from '../constants';
 import { commonStyles } from '../styles/CommonStyles';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
-import authService from '../services/auth/authServices';
+import useAuth from '../hooks/useAuth';
 
 const isTestMode = true;
 
@@ -27,6 +27,7 @@ const initialState = {
 };
 
 const Login = ({ navigation }) => {
+  const { loginWithGoogle, loginClassic } = useAuth();
   const [isChecked, setChecked] = useState(false);
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -46,10 +47,10 @@ const Login = ({ navigation }) => {
     }
   }, [error]);
 
-  const loginWithGoogle = async () => {
+  const loginGoogle = async () => {
     try {
       setIsLoading(true);
-      await authService.loginWithGoogle();
+      await loginWithGoogle();
       navigation.navigate('LocationAccess');
       setError(null);
     } catch (error) {
@@ -59,13 +60,10 @@ const Login = ({ navigation }) => {
     }
   };
 
-  const loginClassic = async () => {
+  const login = async () => {
     try {
       setIsLoading(true);
-      await authService.loginClassic(
-        formState.inputValues['email'],
-        formState.inputValues['password']
-      );
+      await loginClassic(formState.inputValues['email'], formState.inputValues['password']);
       navigation.navigate('LocationAccess');
       setError(null);
     } catch (error) {
@@ -74,10 +72,6 @@ const Login = ({ navigation }) => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    authService.configure();
-  }, []);
 
   return (
     <ImageBackground source={images.background5} style={{ flex: 1, backgroundColor: COLORS.blue }}>
@@ -126,7 +120,7 @@ const Login = ({ navigation }) => {
           title="Iniciar Sesión"
           isLoading={isLoading}
           filled
-          onPress={loginClassic}
+          onPress={login}
           style={commonStyles.btn}
         />
         <View style={commonStyles.center}>
@@ -153,7 +147,7 @@ const Login = ({ navigation }) => {
             }}
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
-            onPress={loginWithGoogle}
+            onPress={loginGoogle}
             disabled={isLoading}
           />
         </View>
