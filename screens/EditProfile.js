@@ -142,6 +142,11 @@ const EditProfile = () => {
             width: SIZES.width - 32,
           }}
         >
+          <View style={commonStyles.center}>
+            <Text style={commonStyles.warningHeader}>
+              Por el momento esta deshabilitado la edición de los campos
+            </Text>
+          </View>
           <Text style={commonStyles.inputHeader}>Nombre</Text>
           <Input
             id="firstName"
