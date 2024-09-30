@@ -19,6 +19,7 @@ const Button = (props) => {
         ...props.style,
       }}
       onPress={props.onPress}
+      disabled={isLoading || props.disabled}
     >
       {isLoading && isLoading == true ? (
         <ActivityIndicator size="small" color={COLORS.white} />

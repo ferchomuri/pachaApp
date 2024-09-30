@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import React, { useState, useReducer, useEffect, useCallback } from 'react';
 import { COLORS, SIZES, icons, images } from '../constants';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +12,8 @@ import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
 import { ScrollView } from 'react-native-virtualized-view';
 import { StatusBar } from 'expo-status-bar';
+import { useUserStore } from '../hooks/useUserStore';
+import loggerService from '../services/logger/loggerService';
 
 const isTestMode = true;
 
@@ -32,17 +34,18 @@ const initialState = {
 };
 
 const EditProfile = () => {
+  const { user } = useUserStore();
   const [image, setImage] = useState(null);
   const [error, setError] = useState();
-  const [formState, dispatchFormState] = useReducer(reducer, initialState);
+  // const [formState, dispatchFormState] = useReducer(reducer, initialState);
 
-  const inputChangedHandler = useCallback(
-    (inputId, inputValue) => {
-      const result = validateInput(inputId, inputValue);
-      dispatchFormState({ inputId, validationResult: result, inputValue });
-    },
-    [dispatchFormState]
-  );
+  // const inputChangedHandler = useCallback(
+  //   (inputId, inputValue) => {
+  //     const result = validateInput(inputId, inputValue);
+  //     dispatchFormState({ inputId, validationResult: result, inputValue });
+  //   },
+  //   [dispatchFormState]
+  // );
 
   useEffect(() => {
     if (error) {
@@ -58,7 +61,10 @@ const EditProfile = () => {
 
       // set the image
       setImage({ uri: tempUri });
-    } catch (error) {}
+    } catch (error) {
+      setError(error.message);
+      loggerService.error(`Error al obtener imagen: ${error}`);
+    }
   };
 
   const renderHeader = () => {
@@ -104,7 +110,7 @@ const EditProfile = () => {
       <View style={{ flexDirection: 'column', alignItems: 'center' }}>
         <View style={{ marginVertical: 12 }}>
           <Image
-            source={image === null ? images.avatar3 : image}
+            source={user.photo === null ? images.avatar : { uri: user.photo }}
             resizeMode="cover"
             style={{
               height: 130,
@@ -113,6 +119,7 @@ const EditProfile = () => {
             }}
           />
           <TouchableOpacity
+            disabled
             onPress={pickImage}
             style={{
               height: 42,
@@ -135,41 +142,60 @@ const EditProfile = () => {
             width: SIZES.width - 32,
           }}
         >
-          <Text style={commonStyles.inputHeader}>Nombre Completo</Text>
+          <View style={commonStyles.center}>
+            <Text style={commonStyles.warningHeader}>
+              Por el momento esta deshabilitado la edición de los campos
+            </Text>
+          </View>
+          <Text style={commonStyles.inputHeader}>Nombre</Text>
           <Input
-            id="fullName"
-            onInputChanged={inputChangedHandler}
-            errorText={formState.inputValidities['fullName']}
-            placeholder="John Doe"
+            id="firstName"
+            disabled
+            // onInputChanged={inputChangedHandler}
+            // errorText={formState.inputValidities['fullName']}
+            placeholder={user.firstName}
+            placeholderTextColor="rgba(0,0,0,0.5)"
+          />
+          <Text style={commonStyles.inputHeader}>Apellido</Text>
+          <Input
+            id="lastName"
+            disabled
+            // onInputChanged={inputChangedHandler}
+            // errorText={formState.inputValidities['fullName']}
+            placeholder={user.lastName}
             placeholderTextColor="rgba(0,0,0,0.5)"
           />
           <Text style={commonStyles.inputHeader}>Correo Electrónico</Text>
           <Input
             id="email"
-            onInputChanged={inputChangedHandler}
-            errorText={formState.inputValidities['email']}
-            placeholder="example@gmail.com"
+            disabled
+            // onInputChanged={inputChangedHandler}
+            // errorText={formState.inputValidities['email']}
+            placeholder={user.email}
             placeholderTextColor="rgba(0,0,0,0.5)"
             keyboardType="email-address"
           />
-          <Text style={commonStyles.inputHeader}>Celular</Text>
+          <Text style={commonStyles.inputHeader}>Teléfono</Text>
           <Input
             id="phoneNumber"
-            onInputChanged={inputChangedHandler}
-            errorText={formState.inputValidities['phoneNumber']}
-            placeholder="111-111-111-222"
+            disabled
+            // onInputChanged={inputChangedHandler}
+            // errorText={formState.inputValidities['phoneNumber']}
+            placeholder={user.phoneNumber}
             placeholderTextColor="rgba(0,0,0,0.5)"
             keyboardType="numeric"
           />
-          <Text style={commonStyles.inputHeader}>Bio</Text>
+          <Text style={commonStyles.inputHeader}>Rol</Text>
           <Input
-            id="bio"
-            onInputChanged={inputChangedHandler}
-            errorText={formState.inputValidities['bio']}
-            placeholder="I love Australia"
+            id="role"
+            disabled
+            // onInputChanged={inputChangedHandler}
+            // errorText={formState.inputValidities['bio']}
+            placeholder={user.role}
             placeholderTextColor="rgba(0,0,0,0.5)"
           />
           <Button
+            disabled
             title="SAVE"
             filled
             onPress={() => navigation.navigate('PersonalProfile')}

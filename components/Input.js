@@ -19,6 +19,7 @@ const Input = (props) => {
         )}
         <TextInput
           {...props}
+          editable={!props.disabled}
           onChangeText={onChangeText}
           style={styles.input}
           placeholder={props.placeholder}
