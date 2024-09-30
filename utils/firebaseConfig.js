@@ -52,18 +52,26 @@ export default {
     }
   },
 
-  getDocument: async (collectionName, docId) => {
+  getDocument: async (collectionName, searchCriteria) => {
     try {
       const collection = firestore().collection(collectionName);
-      const doc = await collection.doc(docId);
-      if (doc.exists) {
-        return doc.data();
+      let query = collection;
+
+      // Construir la consulta basada en los criterios de búsqueda
+      for (const [field, value] of Object.entries(searchCriteria)) {
+        query = query.where(field, '==', value);
+      }
+
+      const querySnapshot = await query.get();
+      if (!querySnapshot.empty) {
+        // Suponiendo que solo se espera un documento que coincida con los criterios
+        return querySnapshot.docs[0].data();
       } else {
         firestore()
           .collection('logs')
           .add({
             level: 'INFO',
-            message: `No such document: ${docId} in collection: ${collectionName}`,
+            message: `No such document matching criteria: ${JSON.stringify(searchCriteria)} in collection: ${collectionName}`,
             timestamp: firestore.FieldValue.serverTimestamp(),
           });
         return null;

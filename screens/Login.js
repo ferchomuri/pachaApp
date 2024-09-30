@@ -43,7 +43,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An error occurred', error);
+      Alert.alert('Un error ocurrió', 'Credenciales incorrectas');
     }
   }, [error]);
 
@@ -67,6 +67,7 @@ const Login = ({ navigation }) => {
       navigation.navigate('LocationAccess');
       setError(null);
     } catch (error) {
+      Alert.alert('Un error ocurrió', 'Credenciales incorrectas');
       setError(error.message);
     } finally {
       setIsLoading(false);

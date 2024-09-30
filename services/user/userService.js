@@ -39,12 +39,14 @@ export default {
     }
   },
 
-  getUserDocument: async (uid) => {
+  getUserDocument: async (params) => {
     try {
-      await firestoreService.getDocument(uid);
-      return loggerService.info('Obtención de usuario completada');
+      const user = await firestoreService.getDocument(collection, params);
+      console.log(user);
+      loggerService.info('Obtención de usuario completada');
+      return user;
     } catch (error) {
-      loggerService.error(`Error al obtener usuario: ${error} - uid: ${uid}`);
+      loggerService.error(`Error al obtener usuario: ${error} - params: ${params}`);
       throw error;
     }
   },

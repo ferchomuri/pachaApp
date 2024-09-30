@@ -38,6 +38,12 @@ export const commonStyles = StyleSheet.create({
     ...FONTS.body4,
     marginVertical: 4,
   },
+  warningHeader: {
+    ...FONTS.body4,
+    color: COLORS.red,
+    textAlign: 'center',
+    marginVertical: 8,
+  },
   checkBoxContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
