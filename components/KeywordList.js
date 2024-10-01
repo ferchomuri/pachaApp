@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { COLORS } from '../constants';
 
-const KeywordList = () => {
+const KeywordList = ({ nameCategories }) => {
   const [selectedKeywords, setSelectedKeywords] = useState([]);
 
-  // Sample keywords
-  const keywords = [
-    { id: '1', text: 'Tomates' },
-    { id: '2', text: 'Lechuga' },
-    { id: '3', text: 'Plátano' },
-    { id: '4', text: 'Uva' },
-    { id: '5', text: 'Col' },
-    // Add more keywords as needed
-  ];
+  const keywords = nameCategories.map((category) => ({
+    id: category.id,
+    text: category.name,
+  }));
 
   const toggleKeyword = (id) => {
     // Check if the keyword is already selected
@@ -69,7 +64,7 @@ const styles = StyleSheet.create({
   keywordItem: {
     paddingHorizontal: 12,
     margin: 4,
-    borderRadius: 8,
+    // borderRadius: 8,
     height: 46,
     backgroundColor: COLORS.secondaryWhite,
     alignItems: 'center',
