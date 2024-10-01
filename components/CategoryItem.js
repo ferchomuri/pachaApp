@@ -22,7 +22,7 @@ const CategoryItem = ({ name, image, onPress }) => {
         }}
       >
         <Image
-          source={image}
+          source={{ uri: image }}
           resizeMode="contain"
           style={{
             height: 36,

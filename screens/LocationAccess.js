@@ -31,6 +31,7 @@ const LocationAccess = ({ navigation }) => {
         latitude: latitude,
         longitude: longitude,
       });
+
       setAddress(`${address[0].name}, ${address[0].district}, ${address[0].city}`);
       setGps(arrayGPS);
     };

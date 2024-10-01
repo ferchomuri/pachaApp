@@ -60,42 +60,39 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigation from './BottomTabNavigation';
 import useAuth from '../hooks/useAuth';
+import { useUserStore } from '../hooks/useUserStore';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
   const { configureGoogleSignIn } = useAuth();
+  const { user } = useUserStore();
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkIfFirstLaunch = async () => {
       try {
-        const value = await AsyncStorage.getItem('alreadyLaunched');
-        if (value === null) {
-          await AsyncStorage.setItem('alreadyLaunched', 'true');
-          setIsFirstLaunch(true);
-        } else {
-          setIsFirstLaunch(false);
-        }
+        const value = user.completedOnboarding;
+        setIsFirstLaunch(!value);
       } catch (error) {
         setIsFirstLaunch(false);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false); // Set loading state to false once the check is complete
     };
 
     checkIfFirstLaunch();
-
     configureGoogleSignIn();
   }, []);
 
   if (isLoading) {
-    return null; // Render a loader or any other loading state component
+    return null;
   }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isFirstLaunch ? 'Onboarding1' : 'Signup'}>
+      <Stack.Navigator initialRouteName={'Login'}>
         <Stack.Screen name="Onboarding1" component={Onboarding1} options={{ headerShown: false }} />
         <Stack.Screen name="Onboarding2" component={Onboarding2} options={{ headerShown: false }} />
         <Stack.Screen name="Onboarding3" component={Onboarding3} options={{ headerShown: false }} />
