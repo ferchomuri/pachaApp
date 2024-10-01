@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { COLORS, SIZES } from '../constants';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
-const ProductCard = ({ name, image, rating, type, price, onPress }) => {
+const ProductCard = ({ name, image, type, price, onPress }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -14,18 +14,18 @@ const ProductCard = ({ name, image, rating, type, price, onPress }) => {
           color={COLORS.primary}
         />
       </TouchableOpacity>
-      <Image source={image} resizeMode="cover" style={styles.image} />
+      <Image source={{ uri: image }} resizeMode="cover" style={styles.image} />
       <View>
         <Text style={styles.name}>{name}</Text>
         <View style={styles.ratingContainer}>
-          <FontAwesome name="star-half-o" size={20} color={COLORS.primary} />
+          {/* <FontAwesome name="star-half-o" size={20} color={COLORS.primary} /> */}
           <View
             style={{
               flexDirection: 'row',
               marginHorizontal: 6,
             }}
           >
-            <Text style={styles.rating}>{rating} | </Text>
+            {/* <Text style={styles.rating}>{rating} | </Text> */}
             <View style={styles.typeContainer}>
               <Text style={styles.type}>{type}</Text>
             </View>

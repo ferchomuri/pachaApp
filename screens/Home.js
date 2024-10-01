@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { COLORS, FONTS, icons, images } from '../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -7,13 +7,38 @@ import { Ionicons } from '@expo/vector-icons';
 import KeywordList from '../components/KeywordList';
 import PromoCard from '../components/PromoCard';
 import { promoData } from '../data/promoData';
-import { categories, products } from '../data/utils';
+// import { categories, products } from '../data/utils';
 import CategoryItem from '../components/CategoryItem';
 import ProductCard from '../components/ProductCard';
 import { useUserStore } from '../hooks/useUserStore';
+import useProduct from '../hooks/useProduct';
+import useCategory from '../hooks/useCategory';
 
 const Home = ({ navigation }) => {
   const { user } = useUserStore();
+  const { categories, getCategories } = useCategory();
+  const { products, getProducts } = useProduct();
+  const [nameCategories, setNameCategories] = useState([]);
+
+  useEffect(() => {
+    getCategories();
+    getProducts();
+  }, []);
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setNameCategories(
+        categories.map((category) => {
+          return {
+            id: category.id,
+            name: category.name,
+          };
+        })
+      );
+    }
+  }, [categories]);
+
+  useEffect(() => {}, [products]);
 
   /**
    *
@@ -22,19 +47,19 @@ const Home = ({ navigation }) => {
   const renderHeader = () => {
     return (
       <View style={styles.headerTopContainer}>
-        <TouchableOpacity style={styles.locationContainer}>
+        {/* <TouchableOpacity style={styles.locationContainer}>
           <Image source={icons.maps} resizeMode="contain" style={styles.mapIcon} />
           <Text style={styles.location}>Paris, France</Text>
           <Image source={icons.arrowDown} resizeMode="contain" style={styles.arrowDownIcon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate('Notifications')}
             style={styles.notiIcon}
           >
             <View style={styles.notiMarker} />
             <Image source={icons.bellOutline} resizeMode="contain" style={styles.bellOutline} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => navigation.navigate('PersonalProfile')}
             style={styles.avatarContainer}
@@ -77,6 +102,7 @@ const Home = ({ navigation }) => {
                 color: COLORS.black,
               }}
             >
+              {' '}
               {user?.firstName}
             </Text>
           </View>
@@ -95,13 +121,13 @@ const Home = ({ navigation }) => {
             <Ionicons name="search-outline" size={24} color="black" />
           </TouchableOpacity>
           <TextInput
-            placeholder="Buscar tomates, lechugas, etc"
+            placeholder={'Frutas, verduras,...'}
             placeholderTextColor={COLORS.secondaryGray}
             value={search}
             onChangeText={(value) => setSearch(value)}
             style={styles.input}
           />
-          <Ionicons name="mic-outline" size={24} color="black" />
+          {/* <Ionicons name="mic-outline" size={24} color="black" /> */}
         </View>
       </React.Fragment>
     );
@@ -186,10 +212,10 @@ const Home = ({ navigation }) => {
           renderItem={({ item, index }) => (
             <ProductCard
               name={item.name}
-              type={item.type}
-              rating={item.rating}
-              price={item.price}
-              image={item.image}
+              type={item.categoryId.type}
+              // rating={item.rating}
+              price={item.categoryId.price}
+              image={item.categoryId.image}
               onPress={() => navigation.navigate('Detail')}
             />
           )}
@@ -204,7 +230,7 @@ const Home = ({ navigation }) => {
         {renderHeader()}
         <ScrollView showsVerticalScrollIndicator={false}>
           {renderSearhBar()}
-          <KeywordList />
+          <KeywordList nameCategories={nameCategories} />
           {renderPromoCard()}
           {renderCategories()}
           {renderTopProducts()}
@@ -227,7 +253,7 @@ const styles = StyleSheet.create({
   },
   headerTopContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     marginBottom: 12,
   },
   locationContainer: {

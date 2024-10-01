@@ -1,5 +1,6 @@
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import Checkbox from 'expo-checkbox';
+import * as Location from 'expo-location';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { Alert, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
@@ -7,10 +8,11 @@ import * as Animatable from 'react-native-animatable';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { COLORS, FONTS, images, SIZES } from '../constants';
+import useAuth from '../hooks/useAuth';
+import { useUserStore } from '../hooks/useUserStore';
 import { commonStyles } from '../styles/CommonStyles';
 import { validateInput } from '../utils/actions/formActions';
 import { reducer } from '../utils/reducers/formReducers';
-import useAuth from '../hooks/useAuth';
 
 const isTestMode = true;
 
@@ -28,6 +30,8 @@ const initialState = {
 
 const Login = ({ navigation }) => {
   const { loginWithGoogle, loginClassic } = useAuth();
+  const { user } = useUserStore();
+
   const [isChecked, setChecked] = useState(false);
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -41,17 +45,11 @@ const Login = ({ navigation }) => {
     [dispatchFormState]
   );
 
-  useEffect(() => {
-    if (error) {
-      Alert.alert('Un error ocurrió', 'Credenciales incorrectas');
-    }
-  }, [error]);
-
   const loginGoogle = async () => {
     try {
       setIsLoading(true);
       await loginWithGoogle();
-      navigation.navigate('LocationAccess');
+      nextScreen();
       setError(null);
     } catch (error) {
       setError(error.message);
@@ -64,7 +62,7 @@ const Login = ({ navigation }) => {
     try {
       setIsLoading(true);
       await loginClassic(formState.inputValues['email'], formState.inputValues['password']);
-      navigation.navigate('LocationAccess');
+      await nextScreen();
       setError(null);
     } catch (error) {
       Alert.alert('Un error ocurrió', 'Credenciales incorrectas');
@@ -73,6 +71,27 @@ const Login = ({ navigation }) => {
       setIsLoading(false);
     }
   };
+
+  const nextScreen = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      navigation.navigate('LocationAccess');
+    } else {
+      navigation.navigate('Main');
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Un error ocurrió', 'Credenciales incorrectas');
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (user) {
+      nextScreen();
+    }
+  }, []);
 
   return (
     <ImageBackground source={images.background5} style={{ flex: 1, backgroundColor: COLORS.blue }}>

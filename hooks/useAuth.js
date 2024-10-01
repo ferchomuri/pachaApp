@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import userService from '../services/user/userService';
@@ -7,6 +7,7 @@ import { useUserStore } from '../hooks/useUserStore';
 
 const useAuth = () => {
   const { setUser, clearUser } = useUserStore();
+
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   const configureGoogleSignIn = () => {

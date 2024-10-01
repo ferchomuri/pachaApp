@@ -49,7 +49,7 @@ const Signup = ({ navigation }) => {
       setIsLoading(true);
       const userInfo = await loginWithGoogle();
       setUserInfo(userInfo);
-      navigation.navigate('LocationAccess');
+      nextScreen();
       setError(null);
     } catch (error) {
       setError(error.message);
@@ -68,12 +68,21 @@ const Signup = ({ navigation }) => {
         formState.inputValues['password']
       );
       setUserInfo(user);
-      navigation.navigate('LocationAccess');
+      nextScreen();
       setError(null);
     } catch (error) {
       setError(error.message);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const nextScreen = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      navigation.navigate('LocationAccess');
+    } else {
+      navigation.navigate('Main');
     }
   };
 
