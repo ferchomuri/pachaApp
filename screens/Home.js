@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
       setNameCategories(
         categories.map((category) => {
           return {
-            id: category.id,
+            id: category.id + 'category',
             name: category.name,
           };
         })
@@ -142,17 +142,18 @@ const Home = ({ navigation }) => {
       <View>
         <View style={styles.spaceBetween}>
           <Text style={styles.spaceLeft}>Oferas Especiales</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SpecialOffers')}>
-            <Text style={styles.spaceRight}> Ver todo</Text>
+          <TouchableOpacity>
+            {/* <Text style={styles.spaceRight}> Ver todo</Text> */}
           </TouchableOpacity>
         </View>
         <FlatList
           data={promoData}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id + 'promo'}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <PromoCard
+              key={index + 'subPromo'}
               title={item.title}
               subtitle={item.subtitle}
               image={item.image}
@@ -185,7 +186,12 @@ const Home = ({ navigation }) => {
           }}
         >
           {categories.slice(0, 12).map((item, index) => (
-            <CategoryItem name={item.name} image={item.image} id={item.id} key={index} />
+            <CategoryItem
+              key={index + 'allCategorySlice'}
+              name={item.name}
+              image={item.image}
+              id={item.id}
+            />
           ))}
         </View>
       </View>
@@ -207,7 +213,7 @@ const Home = ({ navigation }) => {
         </View>
         <FlatList
           data={products}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id + 'product'}
           numColumns={2}
           renderItem={({ item, index }) => (
             <ProductCard
