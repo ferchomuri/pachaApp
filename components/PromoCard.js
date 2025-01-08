@@ -12,9 +12,9 @@ const PromoCard = ({ title, subtitle, description, image, onPress, style }) => {
         <Text style={styles.subtitle}>{subtitle}</Text>
         <Text style={styles.description}>{description}</Text>
       </View>
-      <TouchableOpacity style={styles.button}>
+      {/* <TouchableOpacity style={styles.button}>
         <MaterialIcons name="arrow-right-alt" size={28} color={COLORS.white} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </TouchableOpacity>
   );
 };

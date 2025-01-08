@@ -153,7 +153,7 @@ const Profile = ({ navigation }) => {
                                 style={styles.iconRight}
                             />
                         </View>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('TransactionHistory')}
             style={styles.subContainer}
@@ -167,10 +167,10 @@ const Profile = ({ navigation }) => {
             <View>
               <Image source={icons.arrowRight} style={styles.iconRight} />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <TouchableOpacity
             onPress={() => navigation.navigate('MyWishlist')}
             style={styles.subContainer}
@@ -213,10 +213,10 @@ const Profile = ({ navigation }) => {
               <Image source={icons.arrowRight} style={styles.iconRight} />
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={styles.container}>
-          <TouchableOpacity onPress={() => navigation.navigate('Faqs')} style={styles.subContainer}>
+          <TouchableOpacity onPress={() => console.log()} style={styles.subContainer}>
             <View style={styles.subLeftContainer}>
               <View style={styles.rounded}>
                 <Feather name="info" size={24} color={COLORS.primary} />
@@ -227,7 +227,7 @@ const Profile = ({ navigation }) => {
               <Image source={icons.arrowRight} style={styles.iconRight} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate('Settings')}
             style={styles.subContainer}
           >
@@ -240,7 +240,7 @@ const Profile = ({ navigation }) => {
             <View>
               <Image source={icons.arrowRight} style={styles.iconRight} />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <View style={[styles.container, { marginBottom: 100 }]}>

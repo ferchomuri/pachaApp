@@ -1,13 +1,19 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 import { COLORS, icons } from '../constants';
-import { products } from '../data/utils';
+// import { products } from '../data/utils';
 import ProductCard from '../components/ProductCard';
 import CategoryList from '../components/CategoryList';
+import useProduct from '../hooks/useProduct';
 
 const TopDeals = ({ navigation }) => {
+  const { products, getProducts } = useProduct();
+
+  useEffect(() => {
+    getProducts();
+  }, []);
   /**
    * Render heder
    */
@@ -24,7 +30,7 @@ const TopDeals = ({ navigation }) => {
             color: COLORS.black,
           }}
         >
-          Top Deals
+          Productos
         </Text>
         <TouchableOpacity style={styles.headerIcon}>
           <Image source={icons.more} resizeMode="contain" style={styles.moreIcon} />
@@ -42,15 +48,16 @@ const TopDeals = ({ navigation }) => {
       <View>
         <FlatList
           data={products}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id + 'topDeals'}
           numColumns={2}
           renderItem={({ item, index }) => (
             <ProductCard
+              key={index + 'subTopDeals'}
               name={item.name}
-              type={item.type}
-              rating={item.rating}
-              price={item.price}
-              image={item.image}
+              type={item.categoryId.type}
+              // rating={item.rating}
+              price={item.categoryId.price}
+              image={item.categoryId.image}
             />
           )}
         />

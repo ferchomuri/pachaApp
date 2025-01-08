@@ -3,23 +3,23 @@ import { images } from '../constants';
 export const promoData = [
   {
     id: '1',
-    title: 'Venta de',
-    subtitle: 'Verano',
+    title: '',
+    subtitle: '',
     image: images.promo1,
-    description: 'All discount up to 60%',
+    description: '',
   },
   {
     id: '2',
-    title: 'Tiempo de Mangos',
-    subtitle: 'Amarillos',
+    title: '',
+    subtitle: '',
     image: images.promo2,
-    description: 'All discount up to 50%',
+    description: '',
   },
   {
     id: '3',
-    title: 'Tiempo de Uvas',
-    subtitle: 'Frescas',
+    title: '',
+    subtitle: '',
     image: images.promo3,
-    description: 'All discount up to 40%',
+    description: '',
   },
 ];

@@ -72,7 +72,7 @@ export default {
       );
 
       loggerService.info('Obtención de productos completada');
-      console.log('productsWithDetails', productsWithDetails);
+
       return productsWithDetails;
     } catch (error) {
       console.error(`Error al obtener todos los productos: ${error}`);

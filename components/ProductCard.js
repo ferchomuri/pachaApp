@@ -8,11 +8,11 @@ const ProductCard = ({ name, image, type, price, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <TouchableOpacity onPress={() => setIsFavourite(!isFavourite)} style={styles.likeContainer}>
-        <Ionicons
+        {/* <Ionicons
           name={isFavourite ? 'heart-sharp' : 'heart-outline'}
           size={24}
           color={COLORS.primary}
-        />
+        /> */}
       </TouchableOpacity>
       <Image source={{ uri: image }} resizeMode="cover" style={styles.image} />
       <View>

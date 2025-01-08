@@ -1,12 +1,18 @@
 import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, FONTS, icons } from '../constants';
-import { categories } from '../data/utils';
 import CategoryItem from '../components/CategoryItem';
 import { ScrollView } from 'react-native-virtualized-view';
+import useCategory from '../hooks/useCategory';
 
 const Categories = ({ navigation }) => {
+  const { categories, getCategories } = useCategory();
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   /**
    * Render header
    */
@@ -23,10 +29,10 @@ const Categories = ({ navigation }) => {
             color: COLORS.black,
           }}
         >
-          All Categories
+          Categorias
         </Text>
         <TouchableOpacity style={styles.headerIcon}>
-          <Image source={icons.more} resizeMode="contain" style={styles.moreIcon} />
+          {/* <Image source={icons.more} resizeMode="contain" style={styles.moreIcon} /> */}
         </TouchableOpacity>
       </View>
     );
@@ -45,7 +51,12 @@ const Categories = ({ navigation }) => {
         }}
       >
         {categories.map((item, index) => (
-          <CategoryItem name={item.name} image={item.image} id={item.id} />
+          <CategoryItem
+            key={index + 'allCategory'}
+            name={item.name}
+            image={item.image}
+            id={item.id}
+          />
         ))}
       </View>
     );

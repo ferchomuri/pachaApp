@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, FlatList } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { COLORS, FONTS, icons, images } from '../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -7,7 +7,6 @@ import { Ionicons } from '@expo/vector-icons';
 import KeywordList from '../components/KeywordList';
 import PromoCard from '../components/PromoCard';
 import { promoData } from '../data/promoData';
-// import { categories, products } from '../data/utils';
 import CategoryItem from '../components/CategoryItem';
 import ProductCard from '../components/ProductCard';
 import { useUserStore } from '../hooks/useUserStore';
@@ -19,11 +18,20 @@ const Home = ({ navigation }) => {
   const { categories, getCategories } = useCategory();
   const { products, getProducts } = useProduct();
   const [nameCategories, setNameCategories] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const searchRef = useRef(null);
 
   useEffect(() => {
     getCategories();
     getProducts();
   }, []);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      setFilteredProducts(products);
+    }
+  }, [products]);
 
   useEffect(() => {
     if (categories.length > 0) {
@@ -37,8 +45,6 @@ const Home = ({ navigation }) => {
       );
     }
   }, [categories]);
-
-  useEffect(() => {}, [products]);
 
   /**
    *
@@ -141,7 +147,7 @@ const Home = ({ navigation }) => {
     return (
       <View>
         <View style={styles.spaceBetween}>
-          <Text style={styles.spaceLeft}>Oferas Especiales</Text>
+          <Text style={styles.spaceLeft}>Ofertas Especiales</Text>
           <TouchableOpacity>
             {/* <Text style={styles.spaceRight}> Ver todo</Text> */}
           </TouchableOpacity>
@@ -211,21 +217,24 @@ const Home = ({ navigation }) => {
             <Text style={styles.spaceRight}>Ver todo</Text>
           </TouchableOpacity>
         </View>
-        <FlatList
-          data={products}
-          keyExtractor={(item) => item.id + 'product'}
-          numColumns={2}
-          renderItem={({ item, index }) => (
-            <ProductCard
-              name={item.name}
-              type={item.categoryId.type}
-              // rating={item.rating}
-              price={item.categoryId.price}
-              image={item.categoryId.image}
-              onPress={() => navigation.navigate('Detail')}
-            />
-          )}
-        />
+        {filteredProducts.length > 0 && (
+          <FlatList
+            data={filteredProducts}
+            keyExtractor={(item) => item.categoryId.id + 'product'}
+            numColumns={2}
+            renderItem={({ item, index }) => (
+              <ProductCard
+                key={item.categoryId.id + index + 'subProduct'}
+                name={item.name}
+                type={item.categoryId.type}
+                // rating={item.rating}
+                price={item.categoryId.price}
+                image={item.categoryId.image}
+                onPress={() => navigation.navigate('Detail')}
+              />
+            )}
+          />
+        )}
       </View>
     );
   };
